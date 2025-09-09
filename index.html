@@ -14,8 +14,12 @@
     <!-- Encabezado del sitio -->
     <header class="encabezado">
         <div class="contenido-encabezado">
-            <img src="https://via.placeholder.com/80x80/1e3a8a/ffffff?text=EF" alt="Logo El Faro" class="imagen-logo">
-        <h1 class="logo">El Faro</h1>
+            <img src="images/logo.png" alt="Logo El Faro" class="imagen-logo">
+            <h1 class="logo">El Faro</h1>
+        </div>
+<!--------------------------------------------------------->
+        <div class="fecha-hora" id="fechaHora">
+            <!-- La fecha y hora se actualizará dinámicamente -->
         </div>
         <nav class="navegacion">
             <a href="#inicio" class="enlace-navegacion activo" data-seccion="inicio">Inicio</a>
@@ -23,13 +27,56 @@
             <a href="#negocios" class="enlace-navegacion" data-seccion="negocios">Negocios</a>
         </nav>
     </header>
-
+<!--------------------------------------------------------->
     <!-- Contenido principal -->
     <main class="contenido-principal">
         <!-- Sección de Inicio -->
         <section id="inicio" class="seccion-contenido activa">
             <h2>Noticias Generales</h2>
+<!--------------------------------------------------------->
+            <!-- Contador de artículos -->
+            <div class="contador-articulos">
+                <span class="contador-texto">Total de artículos: <span id="contadorInicio">3</span></span>
+            </div>
             
+            <!-- Formulario para agregar nuevos artículos -->
+            <div class="formulario-agregar-articulo">
+                <h3>Agregar Nuevo Artículo</h3>
+                <form id="formularioArticulo">
+                    <div class="campo-formulario">
+                        <label for="tituloArticulo">Título del Artículo:</label>
+                        <input type="text" id="tituloArticulo" name="titulo" required placeholder="Ingresa el título del artículo">
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="descripcionArticulo">Descripción del Artículo:</label>
+                        <textarea id="descripcionArticulo" name="descripcion" required placeholder="Escribe la descripción del artículo" rows="4"></textarea>
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="categoriaArticulo">Categoría:</label>
+                        <select id="categoriaArticulo" name="categoria" required>
+                            <option value="">Selecciona una categoría</option>
+                            <option value="Deporte">Deporte</option>
+                            <option value="Negocios">Negocios</option>
+                        </select>
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="imagenArticulo">Imagen del Artículo:</label>
+                        <div class="drag-drop-area" id="dragDropArea">
+                            <div class="drag-drop-content">
+                                <p class="drag-drop-text">Arrastra y suelta una imagen aquí</p>
+                                <p class="drag-drop-subtext">o haz clic para seleccionar un archivo</p>
+                                <input type="file" id="imagenArticulo" name="imagen" accept="image/*" style="display: none;">
+                            </div>
+                            <div class="imagen-preview" id="imagenPreview" style="display: none;">
+                                <img id="previewImg" src="" alt="Vista previa">
+                                <button type="button" class="boton-eliminar-imagen" id="eliminarImagen">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="boton-enviar">Agregar Artículo</button>
+                </form>
+            </div>
+<!--------------------------------------------------------->
             <!-- Video Destacado -->
             <div class="seccion-multimedia">
                 <h3>Video Destacado</h3>
@@ -90,7 +137,12 @@
         <!-- Sección de Deporte -->
         <section id="deporte" class="seccion-contenido">
             <h2>Noticias de Deporte</h2>
-            
+<!--------------------------------------------------------->
+            <!-- Contador de artículos -->
+            <div class="contador-articulos">
+                <span class="contador-texto">Total de artículos: <span id="contadorDeporte">3</span></span>
+            </div>
+<!--------------------------------------------------------->
             <!-- Primera noticia de deporte -->
             <div class="articulo-destacado">
                 <div class="imagen-articulo">
@@ -131,7 +183,12 @@
         <!-- Sección de Negocios -->
         <section id="negocios" class="seccion-contenido">
             <h2>Noticias de Negocios</h2>
-            
+<!--------------------------------------------------------->
+            <!-- Contador de artículos -->
+            <div class="contador-articulos">
+                <span class="contador-texto">Total de artículos: <span id="contadorNegocios">3</span></span>
+            </div>
+<!--------------------------------------------------------->
             <!-- Primera noticia de negocios -->
             <div class="articulo-destacado">
                 <div class="imagen-articulo">
@@ -188,17 +245,276 @@
                 <a href="#" class="enlace-social">Twitter</a>
                 <a href="#" class="enlace-social">Instagram</a>
             </div>
+<!--------------------------------------------------------->
+            <div class="seccion-pie">
+                <h4>Formulario de Contacto</h4>
+                <form id="formularioContacto" class="formulario-contacto">
+                    <div class="campo-formulario">
+                        <label for="nombreContacto">Nombre:</label>
+                        <input type="text" id="nombreContacto" name="nombre" required placeholder="Tu nombre completo">
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="mensajeContacto">Mensaje:</label>
+                        <textarea id="mensajeContacto" name="mensaje" required placeholder="Escribe tu mensaje aquí" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="boton-enviar">Enviar Mensaje</button>
+                </form>
+            </div>
         </div>
+<!--------------------------------------------------------->
         <div class="pie-inferior">
             <p>&copy; 2024 El Faro. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- JavaScript para navegación -->
+   <!--------------------------------------------------------->
+    <!-- JavaScript para funcionalidad completa -->
     <script>
+        // Variables globales para almacenar artículos
+        let articulos = {
+            inicio: [
+                {
+                    titulo: "EE.UU. confirma que aviones de combate venezolanos sobrevolaron buque de su Armada en el Caribe",
+                    descripcion: "El gobierno de Estados Unidos confirmó este jueves un incidente con la Fuerza Aérea de Venezuela: dos aviones de combate F-16, armados, sobrevolaron un buque de guerra estadounidense que se encontraba operando en aguas internacionales del Caribe. El hecho fue calificado como una \"acción altamente provocadora\" por el gobierno de Estados Unidos.",
+                    categoria: "Internacional",
+                    imagen: "images/noticia_7.jpeg"
+                },
+                {
+                    titulo: "Boric apunta a republicanos por \"Chao préstamo\": \"La democracia se juega en cosas tan materiales como la pensión\"",
+                    descripcion: "Durante su participación en el aniversario del Instituto Internacional para la Democracia y la Asistencia Electoral (IDEA), el Presidente Gabriel Boric apuntó contra el Partido Republicano y su candidato José Antonio Kast por la propuesta que pretende eliminar el préstamo de las personas al Estado contenido en la reforma previsional.",
+                    categoria: "Política",
+                    imagen: "images/noticia_8.jpeg"
+                },
+                {
+                    titulo: "Renovar para avanzar: \"Terapia de Hogar\" de Easy mejoró instalaciones del Hospital Eduardo Pereira de Valparaíso",
+                    descripcion: "La iniciativa \"Terapia de Hogar\" de Easy ha logrado mejorar significativamente las instalaciones del Hospital Eduardo Pereira de Valparaíso, demostrando cómo las empresas pueden contribuir al bienestar social a través de programas de responsabilidad social que impactan directamente en la calidad de vida de las comunidades.",
+                    categoria: "Tendencias",
+                    imagen: "images/noticia_9.jpeg"
+                }
+            ],
+            deporte: [
+                {
+                    titulo: "La U clasifica, pero tendrá fuertes sanciones: revisa AQUÍ el fallo de la CONMEBOL",
+                    descripcion: "Universidad de Chile logró clasificar a la siguiente fase, sin embargo, la CONMEBOL ha impuesto sanciones significativas al club por infracciones cometidas. Los jugadores celebraron la clasificación con los aficionados en el estadio, pero el club deberá enfrentar las consecuencias de las sanciones impuestas por el organismo continental.",
+                    categoria: "Fútbol Chileno",
+                    imagen: "images/noticia_1.jpeg"
+                },
+                {
+                    titulo: "\"Hasta finales de 2027\": La dura sanción que aplicaría el Gobierno de Buenos Aires a los hinchas de Universidad de Chile",
+                    descripcion: "La Agencia de Prevención de Violencia en el Deporte tomó cartas en el asunto después de los incidentes ocurridos durante el frustrado partido entre la U e Independiente por la Copa Sudamericana.",
+                    categoria: "Fútbol Chileno",
+                    imagen: "images/noticia_2.jpeg"
+                },
+                {
+                    titulo: "¡Otra vez!: La pésima noticia que recibe La Roja para el cierre de las Eliminatorias",
+                    descripcion: "Chile tendrá que sortear una incómoda situación de cara al final de las Eliminatorias ante Uruguay en el Estadio Nacional.",
+                    categoria: "Selección Chilena",
+                    imagen: "images/noticia_3.jpeg"
+                }
+            ],
+            negocios: [
+                {
+                    titulo: "Chilenos ya pueden invertir en acciones locales: ¿Cómo esta innovación revoluciona el acceso al mercado?",
+                    descripcion: "Desde agosto, todos los chilenos ya pueden invertir en acciones del mercado nacional, sumando este nuevo acceso a las más de 12.000 acciones y ETFs del mercado estadounidense que ya ofrece la aplicación. Este lanzamiento convierte a la fintech Zesty en la única plataforma en la región que permite operar en ambos mercados.",
+                    categoria: "Fintech",
+                    imagen: "images/noticia_4.jpeg"
+                },
+                {
+                    titulo: "Nestlé despide a director general de la empresa por tener \"relación amorosa no declarada\" con una subordinada",
+                    descripcion: "El gigante suizo de alimentos Nestlé anunció el lunes el despido con efecto inmediato de su director general Laurent Freixe, debido a una \"relación amorosa no declarada con una subordinada directa\". La empresa precisó que el despido se produjo tras una investigación que reveló una infracción al código de buena conducta profesional.",
+                    categoria: "Empresas",
+                    imagen: "images/noticia_5.jpeg"
+                },
+                {
+                    titulo: "Imacec: actividad económica chilena se desacelera en julio arrastrada por menor producción minera",
+                    descripcion: "La actividad económica chilena mostró una desaceleración en julio, principalmente arrastrada por una menor producción minera. El Imacec registró un comportamiento mixto con algunos sectores mostrando crecimiento mientras otros enfrentan desafíos, especialmente en el sector extractivo que ha sido clave en el desempeño económico del país.",
+                    categoria: "Economía",
+                    imagen: "images/noticia_6.jpeg"
+                }
+            ]
+        };
+
+        // Función para actualizar fecha y hora en tiempo real
+        function actualizarFechaHora() {
+            const elementoFechaHora = document.getElementById('fechaHora');
+            const ahora = new Date();
+            
+            const opciones = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZone: 'America/Santiago'
+            };
+            
+            const fechaFormateada = ahora.toLocaleDateString('es-CL', opciones);
+            elementoFechaHora.textContent = fechaFormateada;
+        }
+
+        // Función para actualizar contadores de artículos
+        function actualizarContadores() {
+            document.getElementById('contadorInicio').textContent = articulos.inicio.length;
+            document.getElementById('contadorDeporte').textContent = articulos.deporte.length;
+            document.getElementById('contadorNegocios').textContent = articulos.negocios.length;
+        }
+
+        // Función para mostrar mensaje de éxito o error
+        function mostrarMensaje(mensaje, tipo = 'exito') {
+            const claseMensaje = tipo === 'exito' ? 'mensaje-exito' : 'mensaje-error';
+            const elementoMensaje = document.createElement('div');
+            elementoMensaje.className = claseMensaje;
+            elementoMensaje.textContent = mensaje;
+            
+            // Insertar mensaje después del formulario
+            const formulario = document.getElementById('formularioArticulo');
+            formulario.parentNode.insertBefore(elementoMensaje, formulario.nextSibling);
+            
+            // Remover mensaje después de 3 segundos
+            setTimeout(() => {
+                elementoMensaje.remove();
+            }, 3000);
+        }
+
+        // Variable para almacenar la imagen seleccionada
+        let imagenSeleccionada = null;
+
+        // Función para agregar nuevo artículo
+        function agregarArticulo(titulo, descripcion, categoria, imagen) {
+            const nuevoArticulo = {
+                titulo: titulo,
+                descripcion: descripcion,
+                categoria: categoria,
+                imagen: imagen || "images/noticia_7.jpeg" // Imagen por defecto si no se selecciona una
+            };
+            
+            // Determinar a qué sección agregar según la categoría
+            let seccionDestino;
+            if (categoria === 'Deporte') {
+                seccionDestino = 'deporte';
+            } else if (categoria === 'Negocios') {
+                seccionDestino = 'negocios';
+            } else {
+                seccionDestino = 'inicio'; // Por defecto
+            }
+            
+            // Agregar a la sección correspondiente
+            articulos[seccionDestino].push(nuevoArticulo);
+            
+            // Renderizar el nuevo artículo en la sección correspondiente
+            renderizarArticulo(nuevoArticulo, seccionDestino);
+            
+            // Actualizar contadores
+            actualizarContadores();
+            
+            // Mostrar mensaje de éxito
+            mostrarMensaje(`¡Artículo agregado exitosamente a la sección de ${categoria}!`, 'exito');
+            
+            // Limpiar formulario
+            limpiarFormulario();
+        }
+
+        // Función para renderizar un artículo en su sección correspondiente
+        function renderizarArticulo(articulo, seccion) {
+            const seccionElement = document.getElementById(seccion);
+            const contadorElement = seccionElement.querySelector('.contador-articulos');
+            
+            // Crear el elemento del artículo
+            const articuloElement = document.createElement('div');
+            articuloElement.className = 'articulo-destacado';
+            articuloElement.innerHTML = `
+                <div class="imagen-articulo">
+                    <img src="${articulo.imagen}" alt="${articulo.titulo}" class="imagen-noticia">
+                </div>
+                <div class="contenido-articulo">
+                    <h3 class="titulo-articulo titulo-hover">${articulo.titulo}</h3>
+                    <p class="categoria-articulo">${articulo.categoria}</p>
+                    <p class="texto-articulo">${articulo.descripcion}</p>
+                </div>
+            `;
+            
+            // Insertar el artículo después del contador
+            contadorElement.insertAdjacentElement('afterend', articuloElement);
+        }
+
+        // Función para limpiar el formulario
+        function limpiarFormulario() {
+            document.getElementById('formularioArticulo').reset();
+            imagenSeleccionada = null;
+            document.getElementById('imagenPreview').style.display = 'none';
+            document.querySelector('.drag-drop-content').style.display = 'block';
+        }
+
+        // Función para manejar la selección de imagen
+        function manejarImagenSeleccionada(archivo) {
+            if (archivo && archivo.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagenSeleccionada = e.target.result;
+                    mostrarVistaPrevia(e.target.result);
+                };
+                reader.readAsDataURL(archivo);
+            } else {
+                mostrarMensaje('Por favor, selecciona un archivo de imagen válido.', 'error');
+            }
+        }
+
+        // Función para mostrar vista previa de la imagen
+        function mostrarVistaPrevia(src) {
+            const preview = document.getElementById('imagenPreview');
+            const previewImg = document.getElementById('previewImg');
+            const dragDropContent = document.querySelector('.drag-drop-content');
+            
+            previewImg.src = src;
+            preview.style.display = 'block';
+            dragDropContent.style.display = 'none';
+        }
+
+        // Función para eliminar imagen seleccionada
+        function eliminarImagen() {
+            imagenSeleccionada = null;
+            document.getElementById('imagenPreview').style.display = 'none';
+            document.querySelector('.drag-drop-content').style.display = 'block';
+            document.getElementById('imagenArticulo').value = '';
+        }
+
+        // Función para manejar envío de formulario de contacto
+        function manejarFormularioContacto(nombre, mensaje) {
+            // Simular envío de mensaje
+            console.log('Mensaje de contacto recibido:');
+            console.log('Nombre:', nombre);
+            console.log('Mensaje:', mensaje);
+            
+            // Mostrar mensaje de confirmación
+            const mensajeConfirmacion = document.createElement('div');
+            mensajeConfirmacion.className = 'mensaje-exito';
+            mensajeConfirmacion.textContent = `¡Gracias ${nombre}! Tu mensaje ha sido enviado correctamente.`;
+            
+            const formularioContacto = document.getElementById('formularioContacto');
+            formularioContacto.parentNode.insertBefore(mensajeConfirmacion, formularioContacto.nextSibling);
+            
+            // Limpiar formulario
+            formularioContacto.reset();
+            
+            // Remover mensaje después de 4 segundos
+            setTimeout(() => {
+                mensajeConfirmacion.remove();
+            }, 4000);
+        }
+
+        // Inicialización cuando el DOM esté cargado
         document.addEventListener('DOMContentLoaded', function() {
             const enlacesNavegacion = document.querySelectorAll('.enlace-navegacion');
             const secciones = document.querySelectorAll('.seccion-contenido');
+
+            // Actualizar fecha y hora cada segundo
+            actualizarFechaHora();
+            setInterval(actualizarFechaHora, 1000);
+
+            // Actualizar contadores iniciales
+            actualizarContadores();
 
             // Navegación entre secciones
             enlacesNavegacion.forEach(enlace => {
@@ -219,6 +535,87 @@
                         seccion.classList.add('activa');
                     }
                 });
+            });
+
+            // Manejar formulario de artículos
+            const formularioArticulo = document.getElementById('formularioArticulo');
+            formularioArticulo.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const titulo = document.getElementById('tituloArticulo').value.trim();
+                const descripcion = document.getElementById('descripcionArticulo').value.trim();
+                const categoria = document.getElementById('categoriaArticulo').value;
+                
+                // Validar campos
+                if (!titulo || !descripcion || !categoria) {
+                    mostrarMensaje('Por favor, completa todos los campos requeridos.', 'error');
+                    return;
+                }
+                
+                // Agregar artículo con imagen
+                agregarArticulo(titulo, descripcion, categoria, imagenSeleccionada);
+            });
+
+            // Configurar drag and drop para imágenes
+            const dragDropArea = document.getElementById('dragDropArea');
+            const inputImagen = document.getElementById('imagenArticulo');
+            const botonEliminarImagen = document.getElementById('eliminarImagen');
+
+            // Event listeners para drag and drop
+            dragDropArea.addEventListener('click', () => inputImagen.click());
+            
+            dragDropArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dragDropArea.classList.add('drag-over');
+            });
+            
+            dragDropArea.addEventListener('dragleave', () => {
+                dragDropArea.classList.remove('drag-over');
+            });
+            
+            dragDropArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dragDropArea.classList.remove('drag-over');
+                
+                const archivos = e.dataTransfer.files;
+                if (archivos.length > 0) {
+                    manejarImagenSeleccionada(archivos[0]);
+                }
+            });
+
+            // Event listener para selección de archivo
+            inputImagen.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    manejarImagenSeleccionada(e.target.files[0]);
+                }
+            });
+
+            // Event listener para eliminar imagen
+            botonEliminarImagen.addEventListener('click', eliminarImagen);
+
+            // Manejar formulario de contacto
+            const formularioContacto = document.getElementById('formularioContacto');
+            formularioContacto.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const nombre = document.getElementById('nombreContacto').value.trim();
+                const mensaje = document.getElementById('mensajeContacto').value.trim();
+                
+                // Validar campos
+                if (!nombre || !mensaje) {
+                    const mensajeError = document.createElement('div');
+                    mensajeError.className = 'mensaje-error';
+                    mensajeError.textContent = 'Por favor, completa todos los campos requeridos.';
+                    formularioContacto.parentNode.insertBefore(mensajeError, formularioContacto.nextSibling);
+                    
+                    setTimeout(() => {
+                        mensajeError.remove();
+                    }, 3000);
+                    return;
+                }
+                
+                // Enviar mensaje
+                manejarFormularioContacto(nombre, mensaje);
             });
         });
     </script>
