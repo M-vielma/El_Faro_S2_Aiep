@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Faro - Periódico Digital</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <!-- Importación de Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,259 +15,759 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Encabezado del sitio -->
-    <header class="encabezado">
-        <div class="contenido-encabezado">
-            <img src="images/logo.png" alt="Logo El Faro" class="imagen-logo">
-            <h1 class="logo">El Faro</h1>
+    <!-- Sección de Avisos Superiores -->
+    <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
+        <div class="container">
+            <i class="bi bi-megaphone me-2"></i>
+            <strong>¡Aviso Importante!</strong> Mantente informado con las últimas noticias de El Faro. 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-<!--------------------------------------------------------->
-        <div class="fecha-hora" id="fechaHora">
+    </div>
+
+    <!-- Encabezado del sitio -->
+    <header class="bg-white shadow-sm sticky-top">
+        <div class="container">
+            <!-- Header principal -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-4 text-center text-md-start">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                        <img src="images/logo.png" alt="Logo El Faro" class="me-3" style="width: 60px; height: 60px; border-radius: 50%;">
+                        <h1 class="mb-0 text-primary fw-bold">El Faro</h1>
+        </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="badge bg-primary fs-6 px-3 py-2" id="fechaHora">
             <!-- La fecha y hora se actualizará dinámicamente -->
         </div>
-        <nav class="navegacion">
-            <a href="#inicio" class="enlace-navegacion activo" data-seccion="inicio">Inicio</a>
-            <a href="#deporte" class="enlace-navegacion" data-seccion="deporte">Deporte</a>
-            <a href="#negocios" class="enlace-navegacion" data-seccion="negocios">Negocios</a>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-2">
+                        <a href="#" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-info btn-sm">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navegación principal -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light rounded mb-3">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav w-100 justify-content-center">
+                            <li class="nav-item">
+                                <a href="#inicio" class="nav-link fw-bold active" data-seccion="inicio">
+                                    <i class="bi bi-house-door me-1"></i>Inicio
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#deporte" class="nav-link fw-bold" data-seccion="deporte">
+                                    <i class="bi bi-trophy me-1"></i>Deporte
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#negocios" class="nav-link fw-bold" data-seccion="negocios">
+                                    <i class="bi bi-briefcase me-1"></i>Negocios
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#tecnologia" class="nav-link fw-bold" data-seccion="tecnologia">
+                                    <i class="bi bi-laptop me-1"></i>Tecnología
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#entretenimiento" class="nav-link fw-bold" data-seccion="entretenimiento">
+                                    <i class="bi bi-film me-1"></i>Entretenimiento
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
         </nav>
+        </div>
     </header>
 <!--------------------------------------------------------->
     <!-- Contenido principal -->
-    <main class="contenido-principal">
+    <main class="container-fluid py-4">
         <!-- Sección de Inicio -->
         <section id="inicio" class="seccion-contenido activa">
-            <h2>Noticias Generales</h2>
-<!--------------------------------------------------------->
-            <!-- Contador de artículos -->
-            <div class="contador-articulos">
-                <span class="contador-texto">Total de artículos: <span id="contadorInicio">3</span></span>
+            <!-- Header de la sección -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="text-primary fw-bold mb-0">
+                            <i class="bi bi-newspaper me-2"></i>Noticias Generales
+                        </h2>
+                        <span class="badge bg-primary fs-6 px-3 py-2">
+                            Total: <span id="contadorInicio">3</span> artículos
+                        </span>
+                    </div>
+                    <hr class="my-3">
+                </div>
             </div>
             
-            <!-- Formulario para agregar nuevos artículos -->
-            <div class="formulario-agregar-articulo">
-                <h3>Agregar Nuevo Artículo</h3>
-                <form id="formularioArticulo">
-                    <div class="campo-formulario">
-                        <label for="tituloArticulo">Título del Artículo:</label>
-                        <input type="text" id="tituloArticulo" name="titulo" required placeholder="Ingresa el título del artículo">
+            <!-- Botón flotante para agregar artículos -->
+            <div class="position-fixed" style="top: 20px; right: 20px; z-index: 1050;" id="contenedorBotonFlotante">
+                <button type="button" class="btn btn-primary btn-lg rounded-circle shadow-lg" id="botonAgregarArticulo" title="Agregar Nuevo Artículo">
+                    <i class="bi bi-plus-lg fs-4"></i>
+                </button>
                     </div>
-                    <div class="campo-formulario">
-                        <label for="descripcionArticulo">Descripción del Artículo:</label>
-                        <textarea id="descripcionArticulo" name="descripcion" required placeholder="Escribe la descripción del artículo" rows="4"></textarea>
+
+            <!-- Modal para agregar nuevos artículos -->
+            <div class="modal fade" id="modalAgregarArticulo" tabindex="-1" aria-labelledby="modalAgregarArticuloLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h1 class="modal-title fs-4" id="modalAgregarArticuloLabel">
+                                <i class="bi bi-plus-circle me-2"></i>Agregar Nuevo Artículo
+                            </h1>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="campo-formulario">
-                        <label for="categoriaArticulo">Categoría:</label>
-                        <select id="categoriaArticulo" name="categoria" required>
-                            <option value="">Selecciona una categoría</option>
-                            <option value="Deporte">Deporte</option>
-                            <option value="Negocios">Negocios</option>
+                        <div class="modal-body p-4">
+                            <form id="formularioArticulo">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="tituloArticulo" class="form-label fw-bold">
+                                            <i class="bi bi-type me-1"></i>Título del Artículo
+                                        </label>
+                                        <input type="text" class="form-control form-control-lg" id="tituloArticulo" name="titulo" required placeholder="Ingresa un título atractivo para tu artículo">
+                                        <div class="form-text">Sé creativo y descriptivo con el título</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="categoriaArticulo" class="form-label fw-bold">
+                                            <i class="bi bi-tags me-1"></i>Categoría
+                                        </label>
+                                        <select class="form-select form-select-lg" id="categoriaArticulo" name="categoria" required>
+                                            <option value="">🏷️ Selecciona una categoría</option>
+                                            <option value="Deporte">⚽ Deporte</option>
+                                            <option value="Negocios">💼 Negocios</option>
+                                            <option value="Tecnología">💻 Tecnología</option>
+                                            <option value="Entretenimiento">🎬 Entretenimiento</option>
                         </select>
+                                        <div class="form-text">Elige la categoría más apropiada para tu contenido</div>
                     </div>
-                    <div class="campo-formulario">
-                        <label for="imagenArticulo">Imagen del Artículo:</label>
-                        <div class="drag-drop-area" id="dragDropArea">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="descripcionArticulo" class="form-label fw-bold">
+                                        <i class="bi bi-file-text me-1"></i>Descripción del Artículo
+                                    </label>
+                                    <textarea class="form-control" id="descripcionArticulo" name="descripcion" required placeholder="Escribe aquí el contenido de tu artículo. Sé claro y conciso para mantener la atención del lector..." rows="6"></textarea>
+                                    <div class="form-text">Mínimo 50 caracteres. Sé detallado pero conciso</div>
+                                    <div class="d-flex justify-content-between align-items-center mt-1">
+                                        <small class="text-muted">Longitud recomendada: 150-300 palabras</small>
+                                        <small class="text-muted" id="contadorCaracteres">0 caracteres</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">
+                                        <i class="bi bi-image me-1"></i>Imagen del Artículo
+                                    </label>
+                                    <div class="drag-drop-area border border-2 border-dashed border-primary rounded-3 p-5 text-center" id="dragDropArea">
                             <div class="drag-drop-content">
-                                <p class="drag-drop-text">Arrastra y suelta una imagen aquí</p>
-                                <p class="drag-drop-subtext">o haz clic para seleccionar un archivo</p>
+                                            <i class="bi bi-cloud-upload fs-1 text-primary mb-3"></i>
+                                            <h5 class="drag-drop-text fw-bold text-primary mb-2">Arrastra y suelta una imagen aquí</h5>
+                                            <p class="drag-drop-subtext text-muted mb-3">o haz clic para seleccionar un archivo</p>
+                                            <button type="button" class="btn btn-outline-primary">
+                                                <i class="bi bi-upload me-2"></i>Seleccionar Imagen
+                                            </button>
                                 <input type="file" id="imagenArticulo" name="imagen" accept="image/*" style="display: none;">
+                                            <div class="mt-3">
+                                                <small class="text-muted">
+                                                    <i class="bi bi-info-circle me-1"></i>
+                                                    Formatos soportados: JPG, PNG, GIF (máx. 5MB)
+                                                </small>
+                                            </div>
                             </div>
                             <div class="imagen-preview" id="imagenPreview" style="display: none;">
-                                <img id="previewImg" src="" alt="Vista previa">
-                                <button type="button" class="boton-eliminar-imagen" id="eliminarImagen">Eliminar</button>
+                                            <div class="text-center">
+                                                <img id="previewImg" src="" alt="Vista previa" class="img-fluid rounded shadow mb-3" style="max-height: 200px;">
+                                                <div>
+                                                    <button type="button" class="btn btn-danger btn-sm" id="eliminarImagen">
+                                                        <i class="bi bi-trash me-1"></i>Eliminar Imagen
+                                                    </button>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="boton-enviar">Agregar Artículo</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="alert alert-info">
+                                            <i class="bi bi-lightbulb me-2"></i>
+                                            <strong>Tip:</strong> Una buena imagen puede aumentar el engagement de tu artículo hasta un 80%.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="alert alert-success">
+                                            <i class="bi bi-check-circle me-2"></i>
+                                            <strong>Ventaja:</strong> Los artículos con imágenes reciben más visualizaciones.
+                                        </div>
+                                    </div>
+                                </div>
                 </form>
-            </div>
-<!--------------------------------------------------------->
-            <!-- Video Destacado -->
-            <div class="seccion-multimedia">
-                <h3>Video Destacado</h3>
-                <div class="contenedor-video">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/9YM7cgG8mu4" title="Video de noticias destacado" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="modal-footer bg-light">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="bi bi-x-circle me-2"></i>Cancelar
+                            </button>
+                            <button type="button" class="btn btn-primary btn-lg" id="btnEnviarArticulo">
+                                <i class="bi bi-plus-circle me-2"></i>Agregar Artículo
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Audio Destacado -->
-            <div class="seccion-multimedia">
-                <h3>Audio Destacado</h3>
-                <div class="contenedor-audio">
-                    <audio controls>
+<!--------------------------------------------------------->
+            <!-- Sección Multimedia -->
+            <div class="row mb-4">
+                <div class="col-lg-8 mb-4">
+                    <div class="card border-info">
+                        <div class="card-header bg-info text-white">
+                            <h3 class="card-title mb-0">
+                                <i class="bi bi-play-circle me-2"></i>Video Destacado
+                            </h3>
+                </div>
+                        <div class="card-body">
+                            <div class="ratio ratio-16x9">
+                                <iframe src="https://www.youtube.com/embed/f_-XZZTZeJ0" title="Video de noticias destacado" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-success">
+                        <div class="card-header bg-success text-white">
+                            <h3 class="card-title mb-0">
+                                <i class="bi bi-volume-up me-2"></i>Audio Destacado
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <audio controls class="w-100">
                         <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
                         <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
                         Tu navegador no soporta el elemento de audio.
                     </audio>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Primera noticia general -->
-            <div class="articulo-destacado">
-                <div class="imagen-articulo">
-                    <img src="images/noticia_7.jpeg" alt="Aviones de combate venezolanos" class="imagen-noticia">
+            <!-- Artículos Destacados -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h3 class="text-primary fw-bold mb-3">
+                        <i class="bi bi-star-fill me-2"></i>Artículos Destacados
+                    </h3>
                 </div>
-                <div class="contenido-articulo">
-                    <h3 class="titulo-articulo titulo-hover">EE.UU. confirma que aviones de combate venezolanos sobrevolaron buque de su Armada en el Caribe</h3>
-                    <p class="categoria-articulo">Internacional</p>
-                    <p class="texto-articulo">El gobierno de Estados Unidos confirmó este jueves un incidente con la Fuerza Aérea de Venezuela: dos aviones de combate F-16, armados, sobrevolaron un buque de guerra estadounidense que se encontraba operando en aguas internacionales del Caribe. El hecho fue calificado como una "acción altamente provocadora" por el gobierno de Estados Unidos.</p>
+            </div>
+            
+            <!-- Artículo Principal Destacado -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card border-warning shadow-lg">
+                        <div class="card-header bg-warning text-dark">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-danger fs-6">DESTACADO</span>
+                                <small class="text-muted">
+                                    <i class="bi bi-clock me-1"></i>Hace 2 horas
+                                </small>
+                            </div>
+                        </div>
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="images/noticia_7.jpeg" class="img-fluid rounded-start h-100 object-cover" alt="Aviones de combate venezolanos">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <span class="badge bg-primary mb-2">Internacional</span>
+                                    <h4 class="card-title text-primary fw-bold">EE.UU. confirma que aviones de combate venezolanos sobrevolaron buque de su Armada en el Caribe</h4>
+                                    <p class="card-text">El gobierno de Estados Unidos confirmó este jueves un incidente con la Fuerza Aérea de Venezuela: dos aviones de combate F-16, armados, sobrevolaron un buque de guerra estadounidense que se encontraba operando en aguas internacionales del Caribe. El hecho fue calificado como una "acción altamente provocadora" por el gobierno de Estados Unidos.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            <i class="bi bi-person me-1"></i>Redacción El Faro
+                                        </small>
+                                        <button class="btn btn-outline-primary btn-sm">
+                                            <i class="bi bi-arrow-right me-1"></i>Leer más
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Segunda noticia general -->
-            <div class="articulo-destacado">
-                <div class="imagen-articulo">
-                    <img src="images/noticia_8.jpeg" alt="Presidente Boric en evento" class="imagen-noticia">
+            <!-- Artículos Secundarios -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h4 class="text-secondary fw-bold mb-3">
+                        <i class="bi bi-newspaper me-2"></i>Más Noticias
+                    </h4>
                 </div>
-                <div class="contenido-articulo">
-                    <h3 class="titulo-articulo titulo-hover">Boric apunta a republicanos por "Chao préstamo": "La democracia se juega en cosas tan materiales como la pensión"</h3>
-                    <p class="categoria-articulo">Política</p>
-                    <p class="texto-articulo">Durante su participación en el aniversario del Instituto Internacional para la Democracia y la Asistencia Electoral (IDEA), el Presidente Gabriel Boric apuntó contra el Partido Republicano y su candidato José Antonio Kast por la propuesta que pretende eliminar el préstamo de las personas al Estado contenido en la reforma previsional.</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Artículo Secundario 1 -->
+                <div class="col-lg-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-img-top-container">
+                            <img src="images/noticia_8.jpeg" class="card-img-top" alt="Presidente Boric en evento" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-success">Política</span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary fw-bold">Boric apunta a republicanos por "Chao préstamo": "La democracia se juega en cosas tan materiales como la pensión"</h5>
+                            <p class="card-text flex-grow-1">Durante su participación en el aniversario del Instituto Internacional para la Democracia y la Asistencia Electoral (IDEA), el Presidente Gabriel Boric apuntó contra el Partido Republicano y su candidato José Antonio Kast por la propuesta que pretende eliminar el préstamo de las personas al Estado contenido en la reforma previsional.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <small class="text-muted">
+                                    <i class="bi bi-clock me-1"></i>Hace 4 horas
+                                </small>
+                                <button class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-arrow-right me-1"></i>Leer
+                                </button>
+                            </div>
+                        </div>
                 </div>
             </div>
 
-            <!-- Tercera noticia general -->
-            <div class="articulo-destacado">
-                <div class="imagen-articulo">
-                    <img src="images/noticia_9.jpeg" alt="Hospital Eduardo Pereira mejorado" class="imagen-noticia">
+                <!-- Artículo Secundario 2 -->
+                <div class="col-lg-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-img-top-container">
+                            <img src="images/noticia_9.jpeg" class="card-img-top" alt="Hospital Eduardo Pereira mejorado" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-info">Tendencias</span>
                 </div>
-                <div class="contenido-articulo">
-                    <h3 class="titulo-articulo titulo-hover">Renovar para avanzar: "Terapia de Hogar" de Easy mejoró instalaciones del Hospital Eduardo Pereira de Valparaíso</h3>
-                    <p class="categoria-articulo">Tendencias</p>
-                    <p class="texto-articulo">La iniciativa "Terapia de Hogar" de Easy ha logrado mejorar significativamente las instalaciones del Hospital Eduardo Pereira de Valparaíso, demostrando cómo las empresas pueden contribuir al bienestar social a través de programas de responsabilidad social que impactan directamente en la calidad de vida de las comunidades.</p>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary fw-bold">Renovar para avanzar: "Terapia de Hogar" de Easy mejoró instalaciones del Hospital Eduardo Pereira de Valparaíso</h5>
+                            <p class="card-text flex-grow-1">La iniciativa "Terapia de Hogar" de Easy ha logrado mejorar significativamente las instalaciones del Hospital Eduardo Pereira de Valparaíso, demostrando cómo las empresas pueden contribuir al bienestar social a través de programas de responsabilidad social que impactan directamente en la calidad de vida de las comunidades.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <small class="text-muted">
+                                    <i class="bi bi-clock me-1"></i>Hace 6 horas
+                                </small>
+                                <button class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-arrow-right me-1"></i>Leer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Sección de Deporte -->
         <section id="deporte" class="seccion-contenido">
-            <h2>Noticias de Deporte</h2>
-<!--------------------------------------------------------->
-            <!-- Contador de artículos -->
-            <div class="contador-articulos">
-                <span class="contador-texto">Total de artículos: <span id="contadorDeporte">3</span></span>
+            <!-- Header de la sección -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="text-success fw-bold mb-0">
+                            <i class="bi bi-trophy me-2"></i>Noticias de Deporte
+                        </h2>
+                        <span class="badge bg-success fs-6 px-3 py-2">
+                            Total: <span id="contadorDeporte">3</span> artículos
+                        </span>
             </div>
-<!--------------------------------------------------------->
-            <!-- Primera noticia de deporte -->
-            <div class="articulo-destacado">
-                <div class="imagen-articulo">
-                    <img src="images/noticia_1.jpeg" alt="Jugadores de fútbol celebrando" class="imagen-noticia">
+                    <hr class="my-3">
                 </div>
-                <div class="contenido-articulo">
-                    <h3 class="titulo-articulo titulo-hover">La U clasifica, pero tendrá fuertes sanciones: revisa AQUÍ el fallo de la CONMEBOL</h3>
-                    <p class="categoria-articulo">Fútbol Chileno</p>
-                    <p class="texto-articulo">Universidad de Chile logró clasificar a la siguiente fase, sin embargo, la CONMEBOL ha impuesto sanciones significativas al club por infracciones cometidas. Los jugadores celebraron la clasificación con los aficionados en el estadio, pero el club deberá enfrentar las consecuencias de las sanciones impuestas por el organismo continental.</p>
+            </div>
+
+            <!-- Artículos de Deporte -->
+            <div class="row g-4">
+                <!-- Artículo 1 -->
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="position-relative">
+                            <img src="images/noticia_1.jpeg" class="card-img-top" alt="Jugadores de fútbol celebrando" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-warning text-dark">Fútbol Chileno</span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-success fw-bold">La U clasifica, pero tendrá fuertes sanciones: revisa AQUÍ el fallo de la CONMEBOL</h5>
+                            <p class="card-text flex-grow-1">Universidad de Chile logró clasificar a la siguiente fase, sin embargo, la CONMEBOL ha impuesto sanciones significativas al club por infracciones cometidas.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <small class="text-muted">
+                                    <i class="bi bi-clock me-1"></i>Hace 1 hora
+                                </small>
+                                <button class="btn btn-outline-success btn-sm">
+                                    <i class="bi bi-arrow-right me-1"></i>Leer
+                                </button>
+                            </div>
+                        </div>
                 </div>
                     </div>
 
-            <!-- Segunda noticia de deporte -->
-            <div class="articulo-destacado">
-                <div class="imagen-articulo">
-                    <img src="images/noticia_2.jpeg" alt="Incidentes en estadio de fútbol" class="imagen-noticia">
+                <!-- Artículo 2 -->
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="position-relative">
+                            <img src="images/noticia_2.jpeg" class="card-img-top" alt="Incidentes en estadio de fútbol" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-warning text-dark">Fútbol Chileno</span>
                 </div>
-                <div class="contenido-articulo">
-                    <h3 class="titulo-articulo titulo-hover">"Hasta finales de 2027": La dura sanción que aplicaría el Gobierno de Buenos Aires a los hinchas de Universidad de Chile</h3>
-                    <p class="categoria-articulo">Fútbol Chileno</p>
-                    <p class="texto-articulo">La Agencia de Prevención de Violencia en el Deporte tomó cartas en el asunto después de los incidentes ocurridos durante el frustrado partido entre la U e Independiente por la Copa Sudamericana.</p>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-success fw-bold">"Hasta finales de 2027": La dura sanción que aplicaría el Gobierno de Buenos Aires a los hinchas de Universidad de Chile</h5>
+                            <p class="card-text flex-grow-1">La Agencia de Prevención de Violencia en el Deporte tomó cartas en el asunto después de los incidentes ocurridos durante el frustrado partido entre la U e Independiente por la Copa Sudamericana.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <small class="text-muted">
+                                    <i class="bi bi-clock me-1"></i>Hace 3 horas
+                                </small>
+                                <button class="btn btn-outline-success btn-sm">
+                                    <i class="bi bi-arrow-right me-1"></i>Leer
+                                </button>
+                            </div>
+                        </div>
                 </div>
                     </div>
 
-            <!-- Tercera noticia de deporte -->
-            <div class="articulo-destacado">
-                <div class="imagen-articulo">
-                    <img src="images/noticia_3.jpeg" alt="Selección chilena en partido" class="imagen-noticia">
+                <!-- Artículo 3 -->
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="position-relative">
+                            <img src="images/noticia_3.jpeg" class="card-img-top" alt="Selección chilena en partido" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-danger">Selección Chilena</span>
                 </div>
-                <div class="contenido-articulo">
-                    <h3 class="titulo-articulo titulo-hover">¡Otra vez!: La pésima noticia que recibe La Roja para el cierre de las Eliminatorias</h3>
-                    <p class="categoria-articulo">Selección Chilena</p>
-                    <p class="texto-articulo">Chile tendrá que sortear una incómoda situación de cara al final de las Eliminatorias ante Uruguay en el Estadio Nacional.</p>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-success fw-bold">¡Otra vez!: La pésima noticia que recibe La Roja para el cierre de las Eliminatorias</h5>
+                            <p class="card-text flex-grow-1">Chile tendrá que sortear una incómoda situación de cara al final de las Eliminatorias ante Uruguay en el Estadio Nacional.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <small class="text-muted">
+                                    <i class="bi bi-clock me-1"></i>Hace 5 horas
+                                </small>
+                                <button class="btn btn-outline-success btn-sm">
+                                    <i class="bi bi-arrow-right me-1"></i>Leer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                     </div>
         </section>
 
         <!-- Sección de Negocios -->
         <section id="negocios" class="seccion-contenido">
-            <h2>Noticias de Negocios</h2>
-<!--------------------------------------------------------->
-            <!-- Contador de artículos -->
-            <div class="contador-articulos">
-                <span class="contador-texto">Total de artículos: <span id="contadorNegocios">3</span></span>
+            <!-- Header de la sección -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="text-info fw-bold mb-0">
+                            <i class="bi bi-briefcase me-2"></i>Noticias de Negocios
+                        </h2>
+                        <span class="badge bg-info fs-6 px-3 py-2">
+                            Total: <span id="contadorNegocios">3</span> artículos
+                        </span>
             </div>
-<!--------------------------------------------------------->
-            <!-- Primera noticia de negocios -->
-            <div class="articulo-destacado">
-                <div class="imagen-articulo">
-                    <img src="images/noticia_4.jpeg" alt="Inversión en acciones chilenas" class="imagen-noticia">
+                    <hr class="my-3">
                 </div>
-                <div class="contenido-articulo">
-                    <h3 class="titulo-articulo titulo-hover">Chilenos ya pueden invertir en acciones locales: ¿Cómo esta innovación revoluciona el acceso al mercado?</h3>
-                    <p class="categoria-articulo">Fintech</p>
-                    <p class="texto-articulo">Desde agosto, todos los chilenos ya pueden invertir en acciones del mercado nacional, sumando este nuevo acceso a las más de 12.000 acciones y ETFs del mercado estadounidense que ya ofrece la aplicación. Este lanzamiento convierte a la fintech Zesty en la única plataforma en la región que permite operar en ambos mercados.</p>
+            </div>
+
+            <!-- Artículos de Negocios -->
+            <div class="row g-4">
+                <!-- Artículo 1 -->
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="position-relative">
+                            <img src="images/noticia_4.jpeg" class="card-img-top" alt="Inversión en acciones chilenas" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-primary">Fintech</span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-info fw-bold">Chilenos ya pueden invertir en acciones locales: ¿Cómo esta innovación revoluciona el acceso al mercado?</h5>
+                            <p class="card-text flex-grow-1">Desde agosto, todos los chilenos ya pueden invertir en acciones del mercado nacional, sumando este nuevo acceso a las más de 12.000 acciones y ETFs del mercado estadounidense que ya ofrece la aplicación.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <small class="text-muted">
+                                    <i class="bi bi-clock me-1"></i>Hace 2 horas
+                                </small>
+                                <button class="btn btn-outline-info btn-sm">
+                                    <i class="bi bi-arrow-right me-1"></i>Leer
+                                </button>
+                            </div>
+                        </div>
                 </div>
                     </div>
 
-            <!-- Segunda noticia de negocios -->
-            <div class="articulo-destacado">
-                <div class="imagen-articulo">
-                    <img src="images/noticia_5.jpeg" alt="CEO de Nestlé despedido" class="imagen-noticia">
+                <!-- Artículo 2 -->
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="position-relative">
+                            <img src="images/noticia_5.jpeg" class="card-img-top" alt="CEO de Nestlé despedido" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-secondary">Empresas</span>
                 </div>
-                <div class="contenido-articulo">
-                    <h3 class="titulo-articulo titulo-hover">Nestlé despide a director general de la empresa por tener "relación amorosa no declarada" con una subordinada</h3>
-                    <p class="categoria-articulo">Empresas</p>
-                    <p class="texto-articulo">El gigante suizo de alimentos Nestlé anunció el lunes el despido con efecto inmediato de su director general Laurent Freixe, debido a una "relación amorosa no declarada con una subordinada directa". La empresa precisó que el despido se produjo tras una investigación que reveló una infracción al código de buena conducta profesional.</p>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-info fw-bold">Nestlé despide a director general de la empresa por tener "relación amorosa no declarada" con una subordinada</h5>
+                            <p class="card-text flex-grow-1">El gigante suizo de alimentos Nestlé anunció el lunes el despido con efecto inmediato de su director general Laurent Freixe, debido a una "relación amorosa no declarada con una subordinada directa".</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <small class="text-muted">
+                                    <i class="bi bi-clock me-1"></i>Hace 4 horas
+                                </small>
+                                <button class="btn btn-outline-info btn-sm">
+                                    <i class="bi bi-arrow-right me-1"></i>Leer
+                                </button>
+                            </div>
+                        </div>
                 </div>
                     </div>
 
-            <!-- Tercera noticia de negocios -->
-            <div class="articulo-destacado">
-                <div class="imagen-articulo">
-                    <img src="images/noticia_6.jpeg" alt="Actividad económica chilena" class="imagen-noticia">
+                <!-- Artículo 3 -->
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="position-relative">
+                            <img src="images/noticia_6.jpeg" class="card-img-top" alt="Actividad económica chilena" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-warning text-dark">Economía</span>
                 </div>
-                <div class="contenido-articulo">
-                    <h3 class="titulo-articulo titulo-hover">Imacec: actividad económica chilena se desacelera en julio arrastrada por menor producción minera</h3>
-                    <p class="categoria-articulo">Economía</p>
-                    <p class="texto-articulo">La actividad económica chilena mostró una desaceleración en julio, principalmente arrastrada por una menor producción minera. El Imacec registró un comportamiento mixto con algunos sectores mostrando crecimiento mientras otros enfrentan desafíos, especialmente en el sector extractivo que ha sido clave en el desempeño económico del país.</p>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-info fw-bold">Imacec: actividad económica chilena se desacelera en julio arrastrada por menor producción minera</h5>
+                            <p class="card-text flex-grow-1">La actividad económica chilena mostró una desaceleración en julio, principalmente arrastrada por una menor producción minera. El Imacec registró un comportamiento mixto con algunos sectores mostrando crecimiento.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <small class="text-muted">
+                                    <i class="bi bi-clock me-1"></i>Hace 6 horas
+                                </small>
+                                <button class="btn btn-outline-info btn-sm">
+                                    <i class="bi bi-arrow-right me-1"></i>Leer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Tecnología -->
+        <section id="tecnologia" class="seccion-contenido">
+            <!-- Header de la sección -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="text-purple fw-bold mb-0">
+                            <i class="bi bi-laptop me-2"></i>Noticias de Tecnología
+                        </h2>
+                        <span class="badge bg-purple fs-6 px-3 py-2">
+                            Total: <span id="contadorTecnologia">0</span> artículos
+                        </span>
+                    </div>
+                    <hr class="my-3">
+                </div>
+            </div>
+
+            <!-- Contenedor de artículos -->
+            <div class="row g-4">
+                <!-- Los artículos se agregarán aquí dinámicamente -->
+            </div>
+            
+            <!-- Mensaje cuando no hay artículos -->
+            <div class="row" id="mensajeSinArticulosTecnologia">
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Sección en desarrollo:</strong> Próximamente tendremos las últimas noticias de tecnología.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Entretenimiento -->
+        <section id="entretenimiento" class="seccion-contenido">
+            <!-- Header de la sección -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="text-danger fw-bold mb-0">
+                            <i class="bi bi-film me-2"></i>Noticias de Entretenimiento
+                        </h2>
+                        <span class="badge bg-danger fs-6 px-3 py-2">
+                            Total: <span id="contadorEntretenimiento">0</span> artículos
+                        </span>
+                    </div>
+                    <hr class="my-3">
+                </div>
+            </div>
+
+            <!-- Contenedor de artículos -->
+            <div class="row g-4">
+                <!-- Los artículos se agregarán aquí dinámicamente -->
+            </div>
+            
+            <!-- Mensaje cuando no hay artículos -->
+            <div class="row" id="mensajeSinArticulosEntretenimiento">
+                <div class="col-12">
+                    <div class="alert alert-warning text-center">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        <strong>Sección en desarrollo:</strong> Próximamente tendremos las últimas noticias de entretenimiento.
+                    </div>
                     </div>
             </div>
         </section>
     </main>
 
-    <!-- Pie de página -->
-    <footer class="pie-pagina">
-        <div class="contenido-pie">
-            <div class="seccion-pie">
-                <h4>El Faro</h4>
-                <p>Tu fuente confiable de noticias locales e internacionales.</p>
+    <!-- Pie de página modernizado -->
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Información de la empresa -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="images/logo.png" alt="Logo El Faro" class="me-2" style="width: 40px; height: 40px; border-radius: 50%;">
+                            <h4 class="text-primary mb-0 fw-bold">El Faro</h4>
             </div>
-            <div class="seccion-pie">
-                <h4>Contacto</h4>
-                <p>Email: info@elfaro.com</p>
-                <p>Teléfono: (123) 456-7890</p>
+                        <p class="text-light-emphasis">Tu fuente confiable de noticias locales e internacionales. Mantente informado con las últimas noticias del día.</p>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-info btn-sm">
+                                <i class="bi bi-twitter"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-success btn-sm">
+                                <i class="bi bi-whatsapp"></i>
+                            </a>
             </div>
-            <div class="seccion-pie">
-                <h4>Síguenos</h4>
-                <a href="#" class="enlace-social">Facebook</a>
-                <a href="#" class="enlace-social">Twitter</a>
-                <a href="#" class="enlace-social">Instagram</a>
-            </div>
-<!--------------------------------------------------------->
-            <div class="seccion-pie">
-                <h4>Formulario de Contacto</h4>
-                <form id="formularioContacto" class="formulario-contacto">
-                    <div class="campo-formulario">
-                        <label for="nombreContacto">Nombre:</label>
-                        <input type="text" id="nombreContacto" name="nombre" required placeholder="Tu nombre completo">
                     </div>
-                    <div class="campo-formulario">
-                        <label for="mensajeContacto">Mensaje:</label>
-                        <textarea id="mensajeContacto" name="mensaje" required placeholder="Escribe tu mensaje aquí" rows="3"></textarea>
+            </div>
+            
+                <!-- Enlaces rápidos -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="text-primary fw-bold mb-3">
+                        <i class="bi bi-link-45deg me-2"></i>Enlaces Rápidos
+                    </h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="#inicio" class="text-light-emphasis text-decoration-none">
+                                <i class="bi bi-house me-1"></i>Inicio
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#deporte" class="text-light-emphasis text-decoration-none">
+                                <i class="bi bi-trophy me-1"></i>Deporte
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#negocios" class="text-light-emphasis text-decoration-none">
+                                <i class="bi bi-briefcase me-1"></i>Negocios
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#tecnologia" class="text-light-emphasis text-decoration-none">
+                                <i class="bi bi-laptop me-1"></i>Tecnología
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#entretenimiento" class="text-light-emphasis text-decoration-none">
+                                <i class="bi bi-film me-1"></i>Entretenimiento
+                            </a>
+                        </li>
+                    </ul>
                     </div>
-                    <button type="submit" class="boton-enviar">Enviar Mensaje</button>
+
+                <!-- Información de contacto -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-primary fw-bold mb-3">
+                        <i class="bi bi-telephone me-2"></i>Contacto
+                    </h5>
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-envelope text-primary me-2"></i>
+                            <span class="text-light-emphasis">info@elfaro.com</span>
+                    </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-telephone text-primary me-2"></i>
+                            <span class="text-light-emphasis">+56 9 1234 5678</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-geo-alt text-primary me-2"></i>
+                            <span class="text-light-emphasis">Santiago, Chile</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-clock text-primary me-2"></i>
+                            <span class="text-light-emphasis">24/7 Noticias</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario de contacto -->
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="text-primary fw-bold mb-3">
+                        <i class="bi bi-chat-dots me-2"></i>Envíanos un Mensaje
+                    </h5>
+                    <form id="formularioContacto" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="nombreContacto" class="form-label text-light-emphasis">Nombre Completo</label>
+                            <input type="text" class="form-control" id="nombreContacto" name="nombre" required placeholder="Tu nombre completo">
+                            <div class="invalid-feedback">
+                                Por favor, ingresa tu nombre.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailContacto" class="form-label text-light-emphasis">Email</label>
+                            <input type="email" class="form-control" id="emailContacto" name="email" required placeholder="tu@email.com">
+                            <div class="invalid-feedback">
+                                Por favor, ingresa un email válido.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensajeContacto" class="form-label text-light-emphasis">Mensaje</label>
+                            <textarea class="form-control" id="mensajeContacto" name="mensaje" required placeholder="Escribe tu mensaje aquí" rows="3"></textarea>
+                            <div class="invalid-feedback">
+                                Por favor, escribe tu mensaje.
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-send me-2"></i>Enviar Mensaje
+                        </button>
                 </form>
             </div>
         </div>
-<!--------------------------------------------------------->
-        <div class="pie-inferior">
-            <p>&copy; 2024 El Faro. Todos los derechos reservados.</p>
+
+            <!-- Línea divisoria -->
+            <hr class="my-4 border-secondary">
+
+            <!-- Información adicional -->
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-light-emphasis mb-0">
+                        <i class="bi bi-shield-check me-2"></i>
+                        &copy; 2024 El Faro. Todos los derechos reservados.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="d-flex justify-content-md-end gap-3">
+                        <a href="#" class="text-light-emphasis text-decoration-none">
+                            <i class="bi bi-file-text me-1"></i>Política de Privacidad
+                        </a>
+                        <a href="#" class="text-light-emphasis text-decoration-none">
+                            <i class="bi bi-journal-text me-1"></i>Términos de Uso
+                        </a>
+                        <a href="#" class="text-light-emphasis text-decoration-none">
+                            <i class="bi bi-question-circle me-1"></i>Ayuda
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -331,7 +835,9 @@
                     categoria: "Economía",
                     imagen: "images/noticia_6.jpeg"
                 }
-            ]
+            ],
+            tecnologia: [],
+            entretenimiento: []
         };
 
         // Función para actualizar fecha y hora en tiempo real
@@ -359,6 +865,8 @@
             document.getElementById('contadorInicio').textContent = articulos.inicio.length;
             document.getElementById('contadorDeporte').textContent = articulos.deporte.length;
             document.getElementById('contadorNegocios').textContent = articulos.negocios.length;
+            document.getElementById('contadorTecnologia').textContent = articulos.tecnologia.length;
+            document.getElementById('contadorEntretenimiento').textContent = articulos.entretenimiento.length;
         }
 
         // Función para mostrar mensaje de éxito o error
@@ -396,6 +904,10 @@
                 seccionDestino = 'deporte';
             } else if (categoria === 'Negocios') {
                 seccionDestino = 'negocios';
+            } else if (categoria === 'Tecnología') {
+                seccionDestino = 'tecnologia';
+            } else if (categoria === 'Entretenimiento') {
+                seccionDestino = 'entretenimiento';
             } else {
                 seccionDestino = 'inicio'; // Por defecto
             }
@@ -419,24 +931,67 @@
         // Función para renderizar un artículo en su sección correspondiente
         function renderizarArticulo(articulo, seccion) {
             const seccionElement = document.getElementById(seccion);
-            const contadorElement = seccionElement.querySelector('.contador-articulos');
             
-            // Crear el elemento del artículo
+            // Determinar el color del badge según la categoría
+            let badgeClass = 'bg-primary';
+            if (articulo.categoria === 'Deporte') {
+                badgeClass = 'bg-warning text-dark';
+            } else if (articulo.categoria === 'Negocios') {
+                badgeClass = 'bg-secondary';
+            } else if (articulo.categoria === 'Tecnología') {
+                badgeClass = 'bg-purple';
+            } else if (articulo.categoria === 'Entretenimiento') {
+                badgeClass = 'bg-danger';
+            }
+            
+            // Crear el elemento del artículo con estructura Bootstrap
             const articuloElement = document.createElement('div');
-            articuloElement.className = 'articulo-destacado';
+            articuloElement.className = 'col-lg-6 mb-4';
             articuloElement.innerHTML = `
-                <div class="imagen-articulo">
-                    <img src="${articulo.imagen}" alt="${articulo.titulo}" class="imagen-noticia">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="position-relative">
+                        <img src="${articulo.imagen}" class="card-img-top" alt="${articulo.titulo}" style="height: 200px; object-fit: cover;">
+                        <div class="position-absolute top-0 start-0 m-2">
+                            <span class="badge ${badgeClass}">${articulo.categoria}</span>
                 </div>
-                <div class="contenido-articulo">
-                    <h3 class="titulo-articulo titulo-hover">${articulo.titulo}</h3>
-                    <p class="categoria-articulo">${articulo.categoria}</p>
-                    <p class="texto-articulo">${articulo.descripcion}</p>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-primary fw-bold">${articulo.titulo}</h5>
+                        <p class="card-text flex-grow-1">${articulo.descripcion}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <small class="text-muted">
+                                <i class="bi bi-clock me-1"></i>Hace unos minutos
+                            </small>
+                            <button class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-arrow-right me-1"></i>Leer
+                            </button>
+                        </div>
+                    </div>
                 </div>
             `;
             
-            // Insertar el artículo después del contador
-            contadorElement.insertAdjacentElement('afterend', articuloElement);
+            // Buscar el contenedor de artículos o crear uno si no existe
+            let contenedorArticulos = seccionElement.querySelector('.row.g-4');
+            if (!contenedorArticulos) {
+                // Si no existe el contenedor, crearlo
+                contenedorArticulos = document.createElement('div');
+                contenedorArticulos.className = 'row g-4';
+                
+                // Insertar después del header de la sección
+                const headerSection = seccionElement.querySelector('.row.mb-4');
+                if (headerSection) {
+                    headerSection.insertAdjacentElement('afterend', contenedorArticulos);
+                }
+            }
+            
+            // Insertar el artículo en el contenedor
+            contenedorArticulos.appendChild(articuloElement);
+            
+            // Ocultar mensaje de "sin artículos" si existe
+            const mensajeSinArticulos = seccionElement.querySelector('#mensajeSinArticulos' + seccion.charAt(0).toUpperCase() + seccion.slice(1));
+            if (mensajeSinArticulos) {
+                mensajeSinArticulos.style.display = 'none';
+            }
         }
 
         // Función para limpiar el formulario
@@ -445,6 +1000,13 @@
             imagenSeleccionada = null;
             document.getElementById('imagenPreview').style.display = 'none';
             document.querySelector('.drag-drop-content').style.display = 'block';
+            
+            // Resetear contador de caracteres
+            const contadorCaracteres = document.getElementById('contadorCaracteres');
+            if (contadorCaracteres) {
+                contadorCaracteres.textContent = '0 caracteres';
+                contadorCaracteres.className = 'text-muted';
+            }
         }
 
         // Función para manejar la selección de imagen
@@ -506,7 +1068,7 @@
 
         // Inicialización cuando el DOM esté cargado
         document.addEventListener('DOMContentLoaded', function() {
-            const enlacesNavegacion = document.querySelectorAll('.enlace-navegacion');
+            const enlacesNavegacion = document.querySelectorAll('.navbar-nav .nav-link');
             const secciones = document.querySelectorAll('.seccion-contenido');
 
             // Actualizar fecha y hora cada segundo
@@ -518,15 +1080,20 @@
 
             // Navegación entre secciones
             enlacesNavegacion.forEach(enlace => {
+                // Verificar que el enlace tenga el atributo data-seccion
+                if (enlace.hasAttribute('data-seccion')) {
                 enlace.addEventListener('click', function(e) {
                     e.preventDefault();
                     
                     // Remover clase activa de todos los enlaces y secciones
-                    enlacesNavegacion.forEach(nav => nav.classList.remove('activo'));
+                        enlacesNavegacion.forEach(nav => {
+                            nav.classList.remove('active');
+                            nav.classList.remove('activo');
+                        });
                     secciones.forEach(seccion => seccion.classList.remove('activa'));
                     
                     // Agregar clase activa al enlace clickeado
-                    this.classList.add('activo');
+                        this.classList.add('active');
                     
                     // Mostrar la sección correspondiente
                     const seccionObjetivo = this.getAttribute('data-seccion');
@@ -535,13 +1102,54 @@
                         seccion.classList.add('activa');
                     }
                 });
+                }
             });
 
-            // Manejar formulario de artículos
-            const formularioArticulo = document.getElementById('formularioArticulo');
-            formularioArticulo.addEventListener('submit', function(e) {
-                e.preventDefault();
+            // Configurar modal y botón flotante
+            const botonAgregarArticulo = document.getElementById('botonAgregarArticulo');
+            const modalAgregarArticulo = new bootstrap.Modal(document.getElementById('modalAgregarArticulo'));
+            const btnEnviarArticulo = document.getElementById('btnEnviarArticulo');
+            const contadorCaracteres = document.getElementById('contadorCaracteres');
+
+            // Abrir modal al hacer clic en el botón flotante
+            botonAgregarArticulo.addEventListener('click', function() {
+                modalAgregarArticulo.show();
+            });
+
+            // Ajustar posición del botón flotante en móviles
+            function ajustarPosicionBoton() {
+                const contenedorBoton = document.getElementById('contenedorBotonFlotante');
+                if (window.innerWidth <= 768) {
+                    contenedorBoton.style.top = 'auto';
+                    contenedorBoton.style.bottom = '20px';
+                } else {
+                    contenedorBoton.style.top = '20px';
+                    contenedorBoton.style.bottom = 'auto';
+                }
+            }
+
+            // Ejecutar al cargar y al redimensionar
+            ajustarPosicionBoton();
+            window.addEventListener('resize', ajustarPosicionBoton);
+
+            // Contador de caracteres en tiempo real
+            const descripcionArticulo = document.getElementById('descripcionArticulo');
+            descripcionArticulo.addEventListener('input', function() {
+                const caracteres = this.value.length;
+                contadorCaracteres.textContent = caracteres + ' caracteres';
                 
+                // Cambiar color según la longitud
+                if (caracteres < 50) {
+                    contadorCaracteres.className = 'text-muted';
+                } else if (caracteres < 200) {
+                    contadorCaracteres.className = 'text-success';
+                } else {
+                    contadorCaracteres.className = 'text-info';
+                }
+            });
+
+            // Manejar envío del formulario
+            btnEnviarArticulo.addEventListener('click', function() {
                 const titulo = document.getElementById('tituloArticulo').value.trim();
                 const descripcion = document.getElementById('descripcionArticulo').value.trim();
                 const categoria = document.getElementById('categoriaArticulo').value;
@@ -552,8 +1160,17 @@
                     return;
                 }
                 
+                // Validar longitud mínima
+                if (descripcion.length < 50) {
+                    mostrarMensaje('La descripción debe tener al menos 50 caracteres.', 'error');
+                    return;
+                }
+                
                 // Agregar artículo con imagen
                 agregarArticulo(titulo, descripcion, categoria, imagenSeleccionada);
+                
+                // Cerrar modal
+                modalAgregarArticulo.hide();
             });
 
             // Configurar drag and drop para imágenes
@@ -619,5 +1236,9 @@
             });
         });
     </script>
+    
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
