@@ -31,8 +31,10 @@ if (!is_array($config)) {
  * @return string URL base completa
  */
 function base_url($path = '') {
-    // URL base fija para evitar problemas de configuración
-    $baseUrl = 'http://localhost/Elfaro_taller_s2/public/';
+    global $config;
+    
+    // Obtener la URL base de la configuración
+    $baseUrl = $config['base_url'] ?? '/';
     
     // Si no hay path, devolver la URL base sin la barra final
     if (empty($path)) {
@@ -122,7 +124,7 @@ function image_url($image) {
         return base_url('assets/images/' . $image);
     }
     
-    return base_url('assets/images/' . $image);
+    return $config['routes']['images'] . $image;
 }
 
 /**

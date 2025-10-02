@@ -51,7 +51,7 @@ class HomeController extends Controller {
             // Fallback para no romper la app si falla la carga
             $config = [
                 'app_name' => 'El Faro',
-                'base_url' => 'http://localhost/Elfaro_taller_s2/public',
+                'base_url' => '/',
                 'ui' => 'bootstrap',
             ];
         }
