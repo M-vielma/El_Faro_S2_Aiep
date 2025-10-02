@@ -1,0 +1,11 @@
+{
+  "name": "elfaro/mvc-prototype",
+  "description": "El Faro - Periódico Digital MVC Prototype",
+  "type": "project",
+  "require": {
+    "php": ">=8.0"
+  },
+  "scripts": {
+    "start": "php -S 0.0.0.0:$PORT -t public server.php"
+  }
+}
