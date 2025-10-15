@@ -17,6 +17,9 @@ if (file_exists($composerAutoload)) {
     die('Error: No se encontró el autoloader de Composer. Por favor ejecuta: composer install');
 }
 
+// Cargar fix de compatibilidad de Supabase (debe ir antes de cualquier otro helper)
+require_once __DIR__ . '/../app/Helpers/SupabaseFix.php';
+
 // Cargar variables de entorno
 require_once __DIR__ . '/../app/Helpers/EnvLoader.php';
 
