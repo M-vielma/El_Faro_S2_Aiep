@@ -34,14 +34,14 @@
             </div>
             <div class="card-body p-4">
                 <!-- Mensajes flash -->
-                <?php if (flash_get('error')): ?>
+                <?php if (flash_has('error')): ?>
                     <div class="alert alert-danger">
                         <i class="bi bi-exclamation-triangle me-2"></i>
                         <?= $this->escape(flash_get('error')) ?>
                     </div>
                 <?php endif; ?>
 
-                <?php if (flash_get('success')): ?>
+                <?php if (flash_has('success')): ?>
                     <div class="alert alert-success">
                         <i class="bi bi-check-circle me-2"></i>
                         <?= $this->escape(flash_get('success')) ?>

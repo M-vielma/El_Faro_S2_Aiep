@@ -21,14 +21,14 @@ class PerfilController extends Controller
         // Comentamos: Verificamos que el usuario esté autenticado
         if (!AuthController::isUserAuthenticated()) {
             flash_error('Debes iniciar sesión para acceder a tu perfil');
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
         $usuario = AuthController::getCurrentUser();
         if (!$usuario) {
             flash_error('Error al cargar los datos del usuario');
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
@@ -50,7 +50,7 @@ class PerfilController extends Controller
         // Comentamos: Verificamos que el usuario esté autenticado
         if (!AuthController::isUserAuthenticated()) {
             flash_error('Debes iniciar sesión para activar la suscripción');
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
@@ -58,7 +58,7 @@ class PerfilController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!verify_csrf($_POST['csrf_token'] ?? '')) {
                 flash_error('Token de seguridad inválido');
-                $this->redirect(base_url() . '/perfil');
+                $this->redirect(base_url('perfil'));
                 return;
             }
         }
@@ -66,7 +66,7 @@ class PerfilController extends Controller
         $usuario = AuthController::getCurrentUser();
         if (!$usuario) {
             flash_error('Error al cargar los datos del usuario');
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
@@ -76,7 +76,7 @@ class PerfilController extends Controller
 
         if (!$usuarioCompleto) {
             flash_error('Usuario no encontrado');
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
@@ -92,7 +92,7 @@ class PerfilController extends Controller
         // Por ahora solo actualizamos la sesión para la demo
 
         flash_success('¡Suscripción Premium activada! Ahora tienes acceso completo a El Faro');
-        $this->redirect(base_url() . '/perfil');
+        $this->redirect(base_url('perfil'));
     }
 
     /**
@@ -105,21 +105,21 @@ class PerfilController extends Controller
         // Comentamos: Verificamos que el usuario esté autenticado
         if (!AuthController::isUserAuthenticated()) {
             flash_error('Debes iniciar sesión para gestionar tu suscripción');
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
         // Comentamos: Verificamos el token CSRF
         if (!verify_csrf($_POST['csrf_token'] ?? '')) {
             flash_error('Token de seguridad inválido');
-            $this->redirect(base_url() . '/perfil');
+            $this->redirect(base_url('perfil'));
             return;
         }
 
         $usuario = AuthController::getCurrentUser();
         if (!$usuario) {
             flash_error('Error al cargar los datos del usuario');
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
@@ -128,7 +128,7 @@ class PerfilController extends Controller
         $_SESSION['auth']['suscrito'] = false;
 
         flash_success('Suscripción cancelada. Ahora tienes acceso básico a El Faro');
-        $this->redirect(base_url() . '/perfil');
+        $this->redirect(base_url('perfil'));
     }
 
     /**
@@ -141,27 +141,27 @@ class PerfilController extends Controller
         // Comentamos: Verificamos que el usuario esté autenticado
         if (!AuthController::isUserAuthenticated()) {
             flash_error('Debes iniciar sesión para actualizar tu perfil');
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
         // Comentamos: Verificamos que sea una petición POST
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect(base_url() . '/perfil');
+            $this->redirect(base_url('perfil'));
             return;
         }
 
         // Comentamos: Verificamos el token CSRF
         if (!verify_csrf($_POST['csrf_token'] ?? '')) {
             flash_error('Token de seguridad inválido');
-            $this->redirect(base_url() . '/perfil');
+            $this->redirect(base_url('perfil'));
             return;
         }
 
         $usuario = AuthController::getCurrentUser();
         if (!$usuario) {
             flash_error('Error al cargar los datos del usuario');
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
@@ -192,7 +192,7 @@ class PerfilController extends Controller
             foreach ($errors as $error) {
                 flash_error($error);
             }
-            $this->redirect(base_url() . '/perfil');
+            $this->redirect(base_url('perfil'));
             return;
         }
 
@@ -202,7 +202,7 @@ class PerfilController extends Controller
         $_SESSION['auth']['suscrito'] = $data['newsletter'];
 
         flash_success('Perfil actualizado correctamente');
-        $this->redirect(base_url() . '/perfil');
+        $this->redirect(base_url('perfil'));
     }
 
     /**

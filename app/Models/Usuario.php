@@ -12,11 +12,11 @@
 class Usuario {
     
     /**
-     * ID único del usuario
+     * ID único del usuario (UUID de Supabase)
      * 
-     * @var int
+     * @var string
      */
-    public int $id;
+    public string $id;
     
     /**
      * Nombre completo del usuario
@@ -66,7 +66,7 @@ class Usuario {
      * Inicializa todas las propiedades del usuario con los valores proporcionados.
      * El constructor es tipado para asegurar la integridad de los datos.
      * 
-     * @param int $id ID único del usuario
+     * @param string $id ID único del usuario (UUID de Supabase)
      * @param string $nombre Nombre completo del usuario
      * @param string $email Email del usuario
      * @param string $password_hash Hash de la contraseña
@@ -75,7 +75,7 @@ class Usuario {
      * @param string $fechaRegistro Fecha de registro
      */
     public function __construct(
-        int $id,
+        string $id,
         string $nombre,
         string $email,
         string $password_hash,
@@ -195,7 +195,7 @@ class Usuario {
      */
     public static function fromArray(array $data): Usuario {
         return new Usuario(
-            $data['id'] ?? 0,
+            $data['id'] ?? '',
             $data['nombre'] ?? '',
             $data['email'] ?? '',
             $data['password_hash'] ?? '',

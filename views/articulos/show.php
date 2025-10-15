@@ -39,6 +39,54 @@
     </ol>
 </nav>
 
+<!-- Navegación secuencial de artículos -->
+<?php if (isset($articulo_anterior) || isset($articulo_siguiente)): ?>
+<div class="navegacion-articulos">
+    <!-- Botón Anterior -->
+    <?php if (isset($articulo_anterior)): ?>
+        <a href="<?= $this->url('/articulos/' . $articulo_anterior->id) ?>" 
+           class="boton-navegacion anterior">
+            <i class="bi bi-chevron-left"></i>
+            <div>
+                <div class="small">Artículo Anterior</div>
+                <div class="fw-bold"><?= $this->escape(mb_substr($articulo_anterior->titulo, 0, 40) . (mb_strlen($articulo_anterior->titulo) > 40 ? '...' : '')) ?></div>
+            </div>
+        </a>
+    <?php else: ?>
+        <span class="boton-navegacion anterior deshabilitado">
+            <i class="bi bi-chevron-left"></i>
+            <div>
+                <div class="small">Sin artículo anterior</div>
+            </div>
+        </span>
+    <?php endif; ?>
+    
+    <!-- Información de posición -->
+    <div class="info-navegacion">
+        <strong>Artículo <?= $this->escape($posicion_actual ?? 1) ?> de <?= $this->escape($total_articulos ?? 1) ?></strong>
+    </div>
+    
+    <!-- Botón Siguiente -->
+    <?php if (isset($articulo_siguiente)): ?>
+        <a href="<?= $this->url('/articulos/' . $articulo_siguiente->id) ?>" 
+           class="boton-navegacion siguiente">
+            <div>
+                <div class="small">Artículo Siguiente</div>
+                <div class="fw-bold"><?= $this->escape(mb_substr($articulo_siguiente->titulo, 0, 40) . (mb_strlen($articulo_siguiente->titulo) > 40 ? '...' : '')) ?></div>
+            </div>
+            <i class="bi bi-chevron-right"></i>
+        </a>
+    <?php else: ?>
+        <span class="boton-navegacion siguiente deshabilitado">
+            <div>
+                <div class="small">Sin artículo siguiente</div>
+            </div>
+            <i class="bi bi-chevron-right"></i>
+        </span>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+
 <!-- Contenido principal -->
 <div class="row">
     <!-- Mensaje principal -->

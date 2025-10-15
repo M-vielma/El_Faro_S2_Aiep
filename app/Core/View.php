@@ -148,13 +148,13 @@ class View {
     }
     
     /**
-     * Genera una URL completa
+     * Genera una URL completa (para enlaces internos de la app)
      * 
      * @param string $path Ruta adicional
      * @return string URL completa
      */
     public function url($path = '') {
-        return base_url($path);
+        return app_url($path);
     }
     
     /**

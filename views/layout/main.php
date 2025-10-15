@@ -236,6 +236,39 @@
     <!-- Contenido principal -->
     <main class="container-fluid py-4">
         <div class="container">
+            <!-- Mensajes Flash -->
+            <?php if (flash_has('success')): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>
+                    <strong>¡Éxito!</strong> <?= $this->escape(flash_get('success')) ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+            
+            <?php if (flash_has('error')): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    <strong>Error:</strong> <?= $this->escape(flash_get('error')) ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+            
+            <?php if (flash_has('info')): ?>
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>Información:</strong> <?= $this->escape(flash_get('info')) ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+            
+            <?php if (flash_has('warning')): ?>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    <strong>Advertencia:</strong> <?= $this->escape(flash_get('warning')) ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+            
             <?= $content ?>
         </div>
     </main>

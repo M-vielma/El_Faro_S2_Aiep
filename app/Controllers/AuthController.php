@@ -4,14 +4,18 @@
  * 
  * Este controlador maneja el registro, login y logout de usuarios
  * con validación completa y seguridad CSRF.
+ * Utiliza Supabase para autenticación y persistencia de datos.
  * 
  * @author Equipo de Desarrollo
- * @version 1.0
+ * @version 2.0
  */
 
 // Cargar dependencias necesarias
 require_once __DIR__ . '/../Models/Usuario.php';
-require_once __DIR__ . '/../Models/Repositorios/UsuarioRepoMem.php';
+require_once __DIR__ . '/../Models/Repositorios/UsuarioRepoSupabase.php';
+require_once __DIR__ . '/../Services/SupabaseService.php';
+
+use ElFaro\Services\SupabaseService;
 
 class AuthController extends Controller
 {
@@ -24,7 +28,7 @@ class AuthController extends Controller
     {
         // Comentamos: Verificamos si el usuario ya está autenticado
         if ($this->isAuthenticated()) {
-            $this->redirect(base_url() . '/perfil');
+            $this->redirect(base_url('perfil'));
             return;
         }
 
@@ -43,22 +47,19 @@ class AuthController extends Controller
     {
         // Comentamos: Verificamos que sea una petición POST
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect(base_url() . '/registro');
+            $this->redirect(base_url('registro'));
             return;
         }
 
         // Comentamos: Verificamos el token CSRF
         if (!verify_csrf($_POST['csrf_token'] ?? '')) {
             flash_error('Token de seguridad inválido');
-            $this->redirect(base_url() . '/registro');
+            $this->redirect(base_url('registro'));
             return;
         }
 
-        // Cargar repositorio de usuarios (asegurar que las clases estén disponibles)
-        if (!class_exists('UsuarioRepoMem')) {
-            require_once __DIR__ . '/../Models/Repositorios/UsuarioRepoMem.php';
-        }
-        $usuarioRepo = new UsuarioRepoMem();
+        // Cargar repositorio de usuarios con Supabase
+        $usuarioRepo = new UsuarioRepoSupabase();
 
         // Comentamos: Obtenemos y validamos los datos del formulario
         $data = [
@@ -101,7 +102,7 @@ class AuthController extends Controller
             foreach ($errors as $error) {
                 flash_error($error);
             }
-            $this->redirect(base_url() . '/registro');
+            $this->redirect(base_url('registro'));
             return;
         }
 
@@ -115,30 +116,73 @@ class AuthController extends Controller
             $plan = 'vip';
         }
 
-        // Comentamos: Creamos el nuevo usuario
-        $usuario = new Usuario(
-            0, // ID será asignado automáticamente
-            $data['nombre'],
-            $data['email'],
-            password_hash($data['password'], PASSWORD_DEFAULT),
-            true, // Suscrito al plan seleccionado
-            $plan, // Plan seleccionado
-            date('Y-m-d H:i:s')
-        );
-
-        // Comentamos: Guardamos el usuario en el repositorio
-        $usuarioCreado = $usuarioRepo->create($usuario);
-
-        if ($usuarioCreado) {
-            // Comentamos: Registro exitoso, mostrar formulario de login
-            flash_success('¡Registro exitoso! Ahora puedes iniciar sesión');
-            $this->view('auth/login', [
-                'email' => $data['email'], // Pre-llenar el email
-                'show_registration_success' => true
+        try {
+            // Comentamos: Creamos el nuevo usuario en Supabase Auth
+            $auth = SupabaseService::auth();
+            $authResponse = $auth->signUp([
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'data' => [
+                    'nombre' => $data['nombre'],
+                    'plan' => $plan
+                ]
             ]);
-        } else {
-            flash_error('Error al crear la cuenta. Inténtalo de nuevo.');
-            $this->view('auth/registro');
+
+            // Verificar si hubo error
+            if (isset($authResponse['error']) && $authResponse['error'] !== null) {
+                throw new \Exception($authResponse['error']->getMessage());
+            }
+
+            // Verificar si se creó el usuario en Auth
+            if (!isset($authResponse['data']['user'])) {
+                throw new \Exception('No se pudo crear el usuario en Supabase Auth');
+            }
+
+            $userData = $authResponse['data']['user'];
+            
+            // Obtener el ID del usuario de Auth
+            $userId = $userData['id'] ?? null;
+            
+            // Si no hay ID, el usuario se creó pero necesita confirmar su email
+            // En este caso, simplemente redirigimos a login
+            if (empty($userId)) {
+                flash_success('¡Registro exitoso! Por favor, revisa tu email para confirmar tu cuenta.');
+                $this->redirect('/login');
+                return;
+            }
+            
+            // Comentamos: Guardamos el usuario en la tabla usuarios
+            $usuario = new Usuario(
+                $userId, // ID del usuario de Auth
+                $data['nombre'],
+                $data['email'],
+                '', // El hash se maneja en Supabase Auth
+                true, // Suscrito al plan seleccionado
+                $plan, // Plan seleccionado
+                date('Y-m-d H:i:s')
+            );
+
+            // Intentar crear el usuario en la tabla usuarios
+            try {
+                $usuarioCreado = $usuarioRepo->create($usuario);
+                
+                if ($usuarioCreado) {
+                    // Comentamos: Registro exitoso, redirigir a login
+                    flash_success('¡Registro exitoso! Ahora puedes iniciar sesión');
+                    $this->redirect('/login');
+                } else {
+                    flash_error('Error al crear la cuenta. Inténtalo de nuevo.');
+                    $this->redirect('/registro');
+                }
+            } catch (\Exception $e) {
+                // Si falla al crear en la tabla usuarios, pero ya se creó en Auth,
+                // consideramos el registro exitoso de todos modos
+                flash_success('¡Registro exitoso! Ahora puedes iniciar sesión');
+                $this->redirect('/login');
+            }
+        } catch (\Exception $e) {
+            flash_error('Error al crear la cuenta: ' . $e->getMessage());
+            $this->redirect('/registro');
         }
     }
 
@@ -151,7 +195,7 @@ class AuthController extends Controller
     {
         // Comentamos: Verificamos si el usuario ya está autenticado
         if ($this->isAuthenticated()) {
-            $this->redirect(base_url() . '/perfil');
+            $this->redirect(base_url('perfil'));
             return;
         }
 
@@ -170,22 +214,19 @@ class AuthController extends Controller
     {
         // Comentamos: Verificamos que sea una petición POST
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
         // Comentamos: Verificamos el token CSRF
         if (!verify_csrf($_POST['csrf_token'] ?? '')) {
             flash_error('Token de seguridad inválido');
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
-        // Cargar repositorio de usuarios (asegurar que las clases estén disponibles)
-        if (!class_exists('UsuarioRepoMem')) {
-            require_once __DIR__ . '/../Models/Repositorios/UsuarioRepoMem.php';
-        }
-        $usuarioRepo = new UsuarioRepoMem();
+        // Cargar repositorio de usuarios con Supabase
+        $usuarioRepo = new UsuarioRepoSupabase();
 
         $email = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
@@ -193,23 +234,62 @@ class AuthController extends Controller
         // Validaciones básicas
         if (empty($email) || empty($password)) {
             flash_error('Email y contraseña son requeridos');
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
 
-        // Comentamos: Buscamos el usuario por email
-        $usuario = $usuarioRepo->findByEmail($email);
+        try {
+            // Comentamos: Autenticamos el usuario con Supabase Auth
+            $auth = SupabaseService::auth();
+            $authResponse = $auth->signInWithPassword([
+                'email' => $email,
+                'password' => $password
+            ]);
 
-        if (!$usuario || !password_verify($password, $usuario->password_hash)) {
-            flash_error('Credenciales incorrectas');
-            $this->redirect(base_url() . '/login');
-            return;
+            // Verificar si hubo error
+            if (isset($authResponse['error']) && $authResponse['error'] !== null) {
+                throw new \Exception($authResponse['error']->getMessage());
+            }
+
+            // Verificar si se autenticó correctamente
+            if (isset($authResponse['data']['user'])) {
+                $userData = $authResponse['data']['user'];
+                
+                // Comentamos: Obtenemos el usuario de la base de datos
+                $usuario = $usuarioRepo->findById($userData['id']);
+
+                // Si no existe en la tabla usuarios, crearlo
+                if (!$usuario) {
+                    $usuario = new Usuario(
+                        $userData['id'],
+                        $userData['user_metadata']['nombre'] ?? 'Usuario',
+                        $userData['email'],
+                        '', // El hash se maneja en Supabase
+                        true,
+                        $userData['user_metadata']['plan'] ?? 'free',
+                        date('Y-m-d H:i:s')
+                    );
+                    
+                    try {
+                        $usuarioRepo->create($usuario);
+                    } catch (\Exception $e) {
+                        // Si falla, continuar de todos modos
+                        error_log('Error al crear usuario en tabla: ' . $e->getMessage());
+                    }
+                }
+
+                // Comentamos: Iniciamos sesión del usuario
+                $this->loginUser($usuario);
+                flash_success('¡Bienvenido de vuelta!');
+                $this->redirect(base_url());
+            } else {
+                flash_error('Credenciales incorrectas');
+                $this->redirect(base_url('login'));
+            }
+        } catch (\Exception $e) {
+            flash_error('Error al iniciar sesión: ' . $e->getMessage());
+            $this->redirect(base_url('login'));
         }
-
-        // Comentamos: Iniciamos sesión del usuario
-        $this->loginUser($usuario);
-        flash_success('¡Bienvenido de vuelta!');
-        $this->redirect(base_url());
     }
 
     /**

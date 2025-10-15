@@ -79,7 +79,45 @@ class ArticuloController extends Controller {
      * @param int $id ID del artículo a mostrar
      */
     public function show($id) {
-        // Mostrar mensaje de "Artículo en desarrollo" para todos los artículos
+        // Obtener el artículo actual
+        $articulo = $this->articuloRepo->find($id);
+        
+        if (!$articulo) {
+            // Si no existe el artículo, redirigir a la lista
+            $this->redirect(base_url('articulos'));
+            return;
+        }
+        
+        // Obtener todos los artículos ordenados por fecha
+        $todosArticulos = $this->articuloRepo->allOrderedByDate();
+        
+        // Encontrar la posición del artículo actual
+        $posicionActual = -1;
+        foreach ($todosArticulos as $index => $art) {
+            if ($art->id == $id) {
+                $posicionActual = $index;
+                break;
+            }
+        }
+        
+        // Determinar artículo anterior y siguiente
+        $articuloAnterior = null;
+        $articuloSiguiente = null;
+        
+        if ($posicionActual > 0) {
+            $articuloAnterior = $todosArticulos[$posicionActual - 1];
+        }
+        
+        if ($posicionActual < count($todosArticulos) - 1) {
+            $articuloSiguiente = $todosArticulos[$posicionActual + 1];
+        }
+        
+        // Pasar datos a la vista
+        $this->setData('articulo', $articulo);
+        $this->setData('articulo_anterior', $articuloAnterior);
+        $this->setData('articulo_siguiente', $articuloSiguiente);
+        $this->setData('posicion_actual', $posicionActual + 1);
+        $this->setData('total_articulos', count($todosArticulos));
         $this->setData('mensaje', 'Artículo en desarrollo');
         $this->setData('titulo_pagina', 'Artículo en desarrollo');
         $this->setData('meta_description', 'Este artículo está en desarrollo');
@@ -191,7 +229,7 @@ class ArticuloController extends Controller {
     public function recientes() {
         // Verificar que sea una petición AJAX
         if (!$this->isAjax()) {
-            $this->redirect(base_url() . '/articulos');
+            $this->redirect(base_url('articulos'));
             return;
         }
         

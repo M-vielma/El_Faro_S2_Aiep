@@ -14,8 +14,8 @@ return [
     // Nombre de la aplicación
     'app_name' => 'El Faro',
     
-    // URL base de la aplicación
-    'base_url' => '/',   // raíz del sitio; sirve en cualquier dominio
+    // URL base de la aplicación (se detecta automáticamente)
+    'base_url' => '',   // Se detectará automáticamente en runtime
     
     // Framework de UI utilizado
     'ui' => 'bootstrap',

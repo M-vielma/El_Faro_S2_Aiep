@@ -10,14 +10,39 @@
  */
 
 // Cargar configuración de la aplicación
-$config = require_once __DIR__ . '/../../config/app.php';
+// Intentar cargar desde diferentes ubicaciones posibles
+$config = null;
+
+// Primera opción: desde app/Helpers
+$configPath1 = __DIR__ . '/../../config/app.php';
+if (file_exists($configPath1)) {
+    $config = require $configPath1;
+}
+
+// Segunda opción: desde public/
+$configPath2 = __DIR__ . '/../config/app.php';
+if (!$config && file_exists($configPath2)) {
+    $config = require $configPath2;
+}
 
 // Validar que la configuración se cargó correctamente
 if (!is_array($config)) {
     $config = [
         'app_name' => 'El Faro',
         'base_url' => '/Elfaro_taller_s2/public/',
-        'ui' => 'bootstrap'
+        'ui' => 'bootstrap',
+        'assets' => [
+            'css_path' => '/assets/css/',
+            'js_path' => '/assets/js/',
+            'images_path' => '/assets/images/',
+            'uploads_path' => '/assets/uploads/'
+        ],
+        'routes' => [
+            'assets' => '/assets/',
+            'css' => '/assets/css/',
+            'js' => '/assets/js/',
+            'images' => '/assets/images/'
+        ]
     ];
 }
 
@@ -34,7 +59,12 @@ function base_url($path = '') {
     global $config;
     
     // Obtener la URL base de la configuración
-    $baseUrl = $config['base_url'] ?? '/';
+    $baseUrl = $config['base_url'] ?? '';
+    
+    // Si la base_url está vacía, detectarla automáticamente
+    if (empty($baseUrl)) {
+        $baseUrl = detect_base_url();
+    }
     
     // Si no hay path, devolver la URL base sin la barra final
     if (empty($path)) {
@@ -44,6 +74,93 @@ function base_url($path = '') {
     // Limpiar el path y construir la URL completa
     $path = ltrim($path, '/');
     return $baseUrl . $path;
+}
+
+/**
+ * Genera una URL interna de la aplicación (para enlaces internos)
+ * 
+ * Esta función genera URLs absolutas para enlaces internos de la aplicación
+ * (navegación, formularios, etc.) que funcionan en cualquier entorno
+ * 
+ * @param string $path Ruta adicional
+ * @return string URL interna absoluta
+ */
+function app_url($path = '') {
+    // Obtener el protocolo (http o https)
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    
+    // Obtener el host
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    
+    // Obtener el script name (ej: /Elfaro_taller_s2/public/index.php)
+    $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+    
+    // Obtener la ruta del directorio del script (ej: /Elfaro_taller_s2/public)
+    $scriptDir = dirname($scriptName);
+    
+    // Normalizar la ruta (convertir \ a / en Windows y eliminar barras dobles)
+    $scriptDir = str_replace('\\', '/', $scriptDir);
+    $scriptDir = str_replace('//', '/', $scriptDir);
+    
+    // Normalizar la ruta (eliminar barras al final)
+    $basePath = rtrim($scriptDir, '/');
+    
+    // Construir la URL base
+    $baseUrl = $protocol . '://' . $host . $basePath;
+    
+    // Si no hay path, devolver solo la URL base
+    if (empty($path)) {
+        return $baseUrl;
+    }
+    
+    // Limpiar el path (eliminar barras al inicio y final)
+    $path = trim($path, '/');
+    
+    // Si el path está vacío después de limpiar, devolver solo la URL base
+    if (empty($path)) {
+        return $baseUrl;
+    }
+    
+    // Construir la URL completa
+    return $baseUrl . '/' . $path;
+}
+
+/**
+ * Detecta automáticamente la URL base del proyecto
+ * 
+ * Esta función detecta la ruta base del proyecto basándose en
+ * las variables de servidor disponibles
+ * 
+ * @return string URL base detectada
+ */
+function detect_base_url() {
+    // Obtener el protocolo (http o https)
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    
+    // Obtener el host
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    
+    // Obtener el script name (ej: /Elfaro_taller_s2/public/index.php)
+    $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+    
+    // Obtener la ruta del directorio del script
+    $scriptDir = dirname($scriptName);
+    
+    // Si estamos en public/index.php, el base_url es el directorio padre
+    // Si estamos en otro lugar, usar el scriptDir
+    if (basename($scriptDir) === 'public') {
+        // Estamos en public/, así que la base es el directorio padre
+        $basePath = dirname($scriptDir);
+    } else {
+        // Usar el directorio del script actual
+        $basePath = $scriptDir;
+    }
+    
+    // Normalizar la ruta (eliminar barras dobles, etc.)
+    $basePath = rtrim($basePath, '/');
+    
+    // Construir la URL completa
+    return $protocol . '://' . $host . $basePath . '/';
 }
 
 /**
@@ -77,16 +194,8 @@ function asset_url($asset) {
  * @return string URL completa del CSS
  */
 function css_url($css) {
-    global $config;
-    
     $css = ltrim($css, '/');
-    
-    // Validar configuración y usar valor por defecto si es necesario
-    if (!is_array($config) || !isset($config['routes']['css'])) {
-        return base_url('assets/css/' . $css);
-    }
-    
-    return $config['routes']['css'] . $css;
+    return base_url('assets/css/' . $css);
 }
 
 /**
@@ -96,16 +205,8 @@ function css_url($css) {
  * @return string URL completa del JS
  */
 function js_url($js) {
-    global $config;
-    
     $js = ltrim($js, '/');
-    
-    // Validar configuración y usar valor por defecto si es necesario
-    if (!is_array($config) || !isset($config['routes']['js'])) {
-        return base_url('assets/js/' . $js);
-    }
-    
-    return $config['routes']['js'] . $js;
+    return base_url('assets/js/' . $js);
 }
 
 /**
@@ -115,16 +216,8 @@ function js_url($js) {
  * @return string URL completa de la imagen
  */
 function image_url($image) {
-    global $config;
-    
     $image = ltrim($image, '/');
-    
-    // Validar configuración y usar valor por defecto si es necesario
-    if (!is_array($config) || !isset($config['routes']['images'])) {
-        return base_url('assets/images/' . $image);
-    }
-    
-    return $config['routes']['images'] . $image;
+    return base_url('assets/images/' . $image);
 }
 
 /**
@@ -197,8 +290,11 @@ function verify_csrf($token) {
  * @param int $statusCode Código de estado HTTP (por defecto 302)
  */
 function redirect($url, $statusCode = 302) {
-    // Si la URL no es absoluta, construir la URL completa
-    if (strpos($url, 'http') !== 0) {
+    // Si la URL ya es absoluta (http/https) o ya empieza con /, usarla tal cual
+    if (strpos($url, 'http') === 0 || strpos($url, '/') === 0) {
+        // URL ya está lista
+    } else {
+        // Si no, construir la URL completa
         $url = base_url() . ltrim($url, '/');
     }
     

@@ -38,14 +38,14 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ===== MEJORAS PARA CARDS ===== */
 .card {
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.18);
 }
 
 .card-img-top-container {
@@ -54,11 +54,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-img-top {
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover .card-img-top {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 /* ===== BOTONES PERSONALIZADOS ===== */
@@ -70,6 +70,98 @@ h1, h2, h3, h4, h5, h6 {
 .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ===== NAVEGACIÓN SECUENCIAL DE ARTÍCULOS ===== */
+.navegacion-articulos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.boton-navegacion {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #0d6efd;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.2);
+}
+
+.boton-navegacion:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(13, 110, 253, 0.3);
+    color: white;
+}
+
+.boton-navegacion.anterior {
+    margin-right: auto;
+}
+
+.boton-navegacion.siguiente {
+    margin-left: auto;
+}
+
+.boton-navegacion i {
+    font-size: 1.2rem;
+}
+
+.boton-navegacion.deshabilitado {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.boton-navegacion.deshabilitado:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.2);
+}
+
+.info-navegacion {
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.info-navegacion strong {
+    color: #0d6efd;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .navegacion-articulos {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .boton-navegacion {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .boton-navegacion.anterior,
+    .boton-navegacion.siguiente {
+        margin: 0;
+    }
+    
+    .info-navegacion {
+        order: -1;
+        width: 100%;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #dee2e6;
+    }
 }
 
 /* ===== NAVEGACIÓN MEJORADA ===== */
@@ -685,16 +777,16 @@ footer .btn-outline-success:hover {
     background-color: white; /* Fondo blanco para artículos */
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
 }
 
 .news-card:hover {
     background-color: black; /* Fondo negro al hacer hover */
     color: white; /* Texto blanco al hacer hover */
-    transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.25);
 }
 
 .news-image {

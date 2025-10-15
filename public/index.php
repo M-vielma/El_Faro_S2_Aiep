@@ -9,9 +9,36 @@
  * @version 1.0
  */
 
-// Configuración para producción
-error_reporting(0);
-ini_set('display_errors', '0');
+// Cargar autoloader de Composer
+$composerAutoload = __DIR__ . '/../vendor/autoload.php';
+if (file_exists($composerAutoload)) {
+    require_once $composerAutoload;
+} else {
+    die('Error: No se encontró el autoloader de Composer. Por favor ejecuta: composer install');
+}
+
+// Cargar variables de entorno
+require_once __DIR__ . '/../app/Helpers/EnvLoader.php';
+
+try {
+    EnvLoader::load();
+} catch (Exception $e) {
+    // Si no hay archivo .env, continuar sin errores
+    error_log('No se pudo cargar el archivo .env: ' . $e->getMessage());
+}
+
+// Configuración de errores basada en el entorno
+$environment = EnvLoader::get('APP_ENV', 'development');
+
+if ($environment === 'development') {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+    ini_set('display_startup_errors', '1');
+} else {
+    error_reporting(0);
+    ini_set('display_errors', '0');
+}
+
 session_start();
 
 // Iniciar sesión si no está iniciada
@@ -79,9 +106,13 @@ try {
     echo '<p>Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo más tarde.</p>';
     
     // En modo desarrollo, mostrar detalles del error
-    if (isset($config['environment']) && $config['environment'] === 'development') {
+    $environment = EnvLoader::get('APP_ENV', 'development');
+    if ($environment === 'development') {
         echo '<h2>Detalles del Error:</h2>';
-        echo '<pre>' . $e->getMessage() . '</pre>';
-        echo '<pre>' . $e->getTraceAsString() . '</pre>';
+        echo '<pre>' . htmlspecialchars($e->getMessage()) . '</pre>';
+        echo '<h3>Stack Trace:</h3>';
+        echo '<pre>' . htmlspecialchars($e->getTraceAsString()) . '</pre>';
+        echo '<h3>Archivo:</h3>';
+        echo '<pre>' . htmlspecialchars($e->getFile()) . ':' . $e->getLine() . '</pre>';
     }
 }

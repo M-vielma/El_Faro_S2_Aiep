@@ -4,10 +4,13 @@
  * 
  * Este controlador maneja el formulario de contacto
  * con validación completa y seguridad CSRF.
+ * Utiliza Supabase para persistencia de datos.
  * 
  * @author Equipo de Desarrollo
- * @version 1.0
+ * @version 2.0
  */
+
+require_once __DIR__ . '/../Models/Repositorios/ContactoRepoSupabase.php';
 
 class ContactoController extends Controller
 {
@@ -33,14 +36,14 @@ class ContactoController extends Controller
     {
         // Comentamos: Verificamos que sea una petición POST
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect(base_url() . '/contacto');
+            $this->redirect(base_url('contacto'));
             return;
         }
 
         // Comentamos: Verificamos el token CSRF
         if (!verify_csrf($_POST['csrf_token'] ?? '')) {
             flash_error('Token de seguridad inválido');
-            $this->redirect(base_url() . '/contacto');
+            $this->redirect(base_url('contacto'));
             return;
         }
 
@@ -79,45 +82,29 @@ class ContactoController extends Controller
             foreach ($errors as $error) {
                 flash_error($error);
             }
-            $this->redirect(base_url() . '/contacto');
+            $this->redirect(base_url('contacto'));
             return;
         }
 
-        // Comentamos: Simulamos el envío del mensaje (en producción se enviaría por email)
-        $this->simularEnvioMensaje($data);
+        try {
+            // Comentamos: Guardamos el mensaje en Supabase
+            $contactoRepo = new ContactoRepoSupabase();
+            $mensajeCreado = $contactoRepo->create($data);
 
-        // Comentamos: Mostramos mensaje de éxito
-        flash_success('¡Mensaje enviado correctamente! Te contactaremos pronto.');
-        $this->redirect(base_url() . '/contacto');
-    }
-
-    /**
-     * Simula el envío de un mensaje de contacto
-     * 
-     * @param array $data Datos del mensaje
-     * @return void
-     */
-    private function simularEnvioMensaje(array $data): void
-    {
-        // Comentamos: En una aplicación real, aquí se enviaría el email
-        // Por ahora solo guardamos en la sesión para demostración
-        $mensajes = $_SESSION['mensajes_contacto'] ?? [];
-        $mensajes[] = [
-            'id' => uniqid(),
-            'nombre' => $data['nombre'],
-            'email' => $data['email'],
-            'mensaje' => $data['mensaje'],
-            'fecha' => date('Y-m-d H:i:s'),
-            'ip' => $_SERVER['REMOTE_ADDR'] ?? 'Desconocida'
-        ];
-        $_SESSION['mensajes_contacto'] = $mensajes;
-
-        // Comentamos: También guardamos en flash para mostrar en la vista
-        flash_set('ultimo_mensaje', [
-            'nombre' => $data['nombre'],
-            'email' => $data['email'],
-            'fecha' => date('d/m/Y H:i:s')
-        ]);
+            if ($mensajeCreado) {
+                // Comentamos: Mostramos mensaje de éxito y redirigimos al inicio
+                flash_success('¡Mensaje enviado correctamente! Te contactaremos pronto.');
+                // Debug temporal
+                error_log('Redirigiendo a: ' . base_url());
+                $this->redirect('/');
+            } else {
+                flash_error('Error al enviar el mensaje. Inténtalo de nuevo.');
+                $this->redirect('/contacto');
+            }
+        } catch (\Exception $e) {
+            flash_error('Error al enviar el mensaje: ' . $e->getMessage());
+            $this->redirect(base_url('contacto'));
+        }
     }
 
     /**
@@ -127,7 +114,13 @@ class ContactoController extends Controller
      */
     public static function getMensajes(): array
     {
-        return $_SESSION['mensajes_contacto'] ?? [];
+        try {
+            $contactoRepo = new ContactoRepoSupabase();
+            return $contactoRepo->all();
+        } catch (\Exception $e) {
+            error_log('Error al obtener mensajes: ' . $e->getMessage());
+            return [];
+        }
     }
 
     /**
@@ -137,6 +130,13 @@ class ContactoController extends Controller
      */
     public static function getUltimoMensaje(): ?array
     {
-        return flash_get('ultimo_mensaje');
+        try {
+            $contactoRepo = new ContactoRepoSupabase();
+            $mensajes = $contactoRepo->all();
+            return !empty($mensajes) ? $mensajes[0] : null;
+        } catch (\Exception $e) {
+            error_log('Error al obtener último mensaje: ' . $e->getMessage());
+            return null;
+        }
     }
 }

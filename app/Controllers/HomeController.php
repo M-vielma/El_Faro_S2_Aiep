@@ -18,9 +18,9 @@ class HomeController extends Controller {
      * y tarjetas de los últimos artículos publicados
      */
     public function index() {
-        // Cargar repositorio de artículos
-        require_once __DIR__ . '/../Models/Repositorios/ArticuloRepoMem.php';
-        $articuloRepo = new ArticuloRepoMem();
+        // Cargar repositorio de artículos con Supabase
+        require_once __DIR__ . '/../Models/Repositorios/ArticuloRepoSupabase.php';
+        $articuloRepo = new ArticuloRepoSupabase();
         
         // Establecer título y metadatos de la página
         $this->setTitle('Inicio');
@@ -124,7 +124,7 @@ class HomeController extends Controller {
     public function enviarContacto() {
         // Verificar que sea una petición POST
         if (!$this->isAjax() && $_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect(base_url() . '/contacto');
+            $this->redirect(base_url('contacto'));
             return;
         }
         
@@ -161,7 +161,7 @@ class HomeController extends Controller {
         if ($this->isAjax()) {
             $this->json(['success' => true, 'message' => 'Mensaje enviado correctamente']);
         } else {
-            $this->redirect(base_url() . '/contacto');
+            $this->redirect(base_url('contacto'));
         }
     }
     
@@ -184,14 +184,14 @@ class HomeController extends Controller {
      */
     public function procesarRegistro() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect(base_url() . '/registro');
+            $this->redirect(base_url('registro'));
             return;
         }
         
-        // Cargar repositorio de usuarios
+        // Cargar repositorio de usuarios con Supabase
         require_once __DIR__ . '/../Models/Usuario.php';
-        require_once __DIR__ . '/../Models/Repositorios/UsuarioRepoMem.php';
-        $usuarioRepo = new UsuarioRepoMem();
+        require_once __DIR__ . '/../Models/Repositorios/UsuarioRepoSupabase.php';
+        $usuarioRepo = new UsuarioRepoSupabase();
         
         // Validar datos del registro
         $data = [
@@ -283,14 +283,14 @@ class HomeController extends Controller {
      */
     public function procesarLogin() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect(base_url() . '/login');
+            $this->redirect(base_url('login'));
             return;
         }
         
-        // Cargar repositorio de usuarios
+        // Cargar repositorio de usuarios con Supabase
         require_once __DIR__ . '/../Models/Usuario.php';
-        require_once __DIR__ . '/../Models/Repositorios/UsuarioRepoMem.php';
-        $usuarioRepo = new UsuarioRepoMem();
+        require_once __DIR__ . '/../Models/Repositorios/UsuarioRepoSupabase.php';
+        $usuarioRepo = new UsuarioRepoSupabase();
         
         $email = post_param('email', '');
         $password = post_param('password', '');
